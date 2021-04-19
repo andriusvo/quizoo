@@ -39,15 +39,15 @@ if [ "${NFQ_PROJECT_INIT:-1}" = '1' ]; then
     echo -e '\n## DB setup ... '
     bin/console doctrine:database:drop --force --if-exists
     bin/console doctrine:database:create
-    bin/console doctrine:migrations:migrate --no-interaction
-    bin/console sylius:rbac:initialize
-    bin/console sylius:fixtures:load default --no-interaction
+#    bin/console doctrine:migrations:migrate --no-interaction
+#    bin/console sylius:rbac:initialize
+#    bin/console sylius:fixtures:load default --no-interaction
 
 
     echo -e '\n## Testing DB setup ... '
-    bin/console doctrine:database:drop --force --if-exists --env=test
-    bin/console doctrine:database:create --env=test
-    bin/console doctrine:schema:update --force --env=test
+#    bin/console doctrine:database:drop --force --if-exists --env=test
+#    bin/console doctrine:database:create --env=test
+#    bin/console doctrine:schema:update --force --env=test
 fi
 
 echo -e '\n## Frontend setup ... '
@@ -57,8 +57,8 @@ yarn build
 sleep 15
 
 echo -e '\n## Clearing doctrines cache ... '
-bin/console doctrine:cache:clear-result --env=prod
-bin/console doctrine:cache:clear-query --env=prod
-bin/console doctrine:cache:clear-metadata --env=prod
+#bin/console doctrine:cache:clear-result --env=prod
+#bin/console doctrine:cache:clear-query --env=prod
+#bin/console doctrine:cache:clear-metadata --env=prod
 
 nc supervisor 2048
