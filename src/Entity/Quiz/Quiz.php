@@ -20,14 +20,25 @@ declare(strict_types=1);
 namespace App\Entity\Quiz;
 
 use App\Model\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Platform\Bundle\AdminBundle\Model\AdminUser;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\ToggleableTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="app_quiz")
+ *
+ * @UniqueEntity(fields={"code"})
+ */
 class Quiz implements ResourceInterface, TimestampableInterface
 {
     use TimestampableTrait;
+    use ToggleableTrait;
 
     /**
      * @var int
@@ -55,7 +66,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, length=30)
      */
     private $code;
 
@@ -66,6 +77,39 @@ class Quiz implements ResourceInterface, TimestampableInterface
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $owner;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $subject;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $finished = false;
+
+    /**
+     * @var Question[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Question",  mappedBy="quiz", cascade={"persist"})
+     */
+    private $questions;
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -116,6 +160,67 @@ class Quiz implements ResourceInterface, TimestampableInterface
     public function setOwner(AdminUser $owner): Quiz
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): Quiz
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(string $subject): Quiz
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function isFinished(): bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): Quiz
+    {
+        $this->finished = $finished;
+
+        return $this;
+    }
+
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): Quiz
+    {
+        if (false === $this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setQuiz($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): Quiz
+    {
+        if ($this->questions->contains($question)) {
+            $this->questions->removeElement($question);
+            $question->setQuiz(null);
+        }
 
         return $this;
     }

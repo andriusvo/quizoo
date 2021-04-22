@@ -2,7 +2,7 @@ sylius_fixtures:
     suites:
         default:
             fixtures:
-                sylius_locale:
+                app_locale:
                     priority: 0
                     options:
                         locales:

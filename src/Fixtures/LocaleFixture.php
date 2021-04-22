@@ -25,36 +25,20 @@ use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-/**
- * Class LocaleFixture.
- */
 class LocaleFixture extends AbstractFixture
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $manager;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $factory;
 
-    /**
-     * LocaleFixture constructor.
-     *
-     * @param ObjectManager $manager
-     * @param FactoryInterface $factory
-     */
     public function __construct(ObjectManager $manager, FactoryInterface $factory)
     {
         $this->manager = $manager;
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $options): void
     {
         foreach ($options['locales'] as $localeData) {
@@ -68,17 +52,11 @@ class LocaleFixture extends AbstractFixture
         $this->manager->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
-        return 'sylius_locale';
+        return 'app_locale';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptionsNode(ArrayNodeDefinition $optionsNode): void
     {
         $optionsNode
