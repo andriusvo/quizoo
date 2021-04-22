@@ -1,0 +1,140 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                app_question:
+                    priority: 10
+                    options:
+                        questions:
+                            -
+                                title: How many is 2+2?
+                                quiz: 'VU-15-18'
+                                answers:
+                                    -
+                                        value: 4
+                                        correct: true
+                                    -
+                                        value: 8
+                                        correct: false
+                                    -
+                                        value: 10
+                                        correct: false
+                            -
+                                title: How many is 8+2?
+                                quiz: 'VU-15-18'
+                                answers:
+                                    -
+                                        value: 10
+                                        correct: true
+                                    -
+                                        value: 9
+                                        correct: false
+                                    -
+                                        value: 8
+                                        correct: false
+                            -
+                                title: How many is 2x2?
+                                quiz: 'VU-15-18'
+                                answers:
+                                    -
+                                        value: 4
+                                        correct: true
+                                    -
+                                        value: 15
+                                        correct: false
+                                    -
+                                        value: 10
+                                        correct: false
+                            -
+                                title: How many is 10-2?
+                                quiz: 'VU-15-18'
+                                answers:
+                                    -
+                                        value: 4
+                                        correct: false
+                                    -
+                                        value: 8
+                                        correct: true
+                                    -
+                                        value: 10
+                                        correct: false
+                            -
+                                title: How many is 9+1?
+                                quiz: 'VU-15-18'
+                                answers:
+                                    -
+                                        value: 4
+                                        correct: true
+                                    -
+                                        value: 8
+                                        correct: false
+                                    -
+                                        value: 10
+                                        correct: true
+                            -
+                                title: Is it plural?
+                                type: boolean_answer
+                                quiz: 'VU-18-19'
+                                answers:
+                                    -
+                                        value: 'false'
+                                        correct: true
+                                    -
+                                        value: 'true'
+                                        correct: false
+                            -
+                                title: Who is Queen Elizabeth?
+                                type: free_text_answer
+                                quiz: 'VU-18-19'
+                                answers:
+                                    -
+                                        value: Queen Elizabeth is best queen
+                                        correct: false
+                            -
+                                title: Roses are red or blue?
+                                quiz: 'VU-18-19'
+                                answers:
+                                    -
+                                        value: Roses are red
+                                        correct: true
+                                    -
+                                        value: Roses are blue
+                                        correct: false
+                                    -
+                                        value: Rose are violet
+                                        correct: false
+                            -
+                                title: What is polymorphism?
+                                type: free_text_answer
+                                quiz: 'VU-20-12'
+                                answers:
+                                    -
+                                        value: Polymorphism is very good
+                                        correct: false
+                            -
+                                title: Do the calculations 1 && 0?
+                                quiz: 'VU-20-12'
+                                answers:
+                                    -
+                                        value: Yes
+                                        correct: false
+                                    -
+                                        value: No
+                                        correct: true
+                                    -
+                                        value: I don't know
+                                        correct: false
+                            -
+                                title: PHP or C#?
+                                type: single_answer
+                                quiz: 'VU-20-12'
+                                answers:
+                                    -
+                                        value: PHP Very good
+                                        correct: true
+                                    -
+                                        value: C# not that bad
+                                        correct: false
+                                    -
+                                        value: JS for the win
+                                        correct: false

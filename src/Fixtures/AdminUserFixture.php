@@ -25,36 +25,20 @@ use Sylius\Bundle\FixturesBundle\Fixture\AbstractFixture;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-/**
- * Class AdminUserFixture.
- */
 class AdminUserFixture extends AbstractFixture
 {
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $manager;
 
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $factory;
 
-    /**
-     * LocaleFixture constructor.
-     *
-     * @param ObjectManager $manager
-     * @param FactoryInterface $factory
-     */
     public function __construct(ObjectManager $manager, FactoryInterface $factory)
     {
         $this->manager = $manager;
         $this->factory = $factory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $options): void
     {
         foreach ($options['users'] as $userData) {
@@ -79,17 +63,11 @@ class AdminUserFixture extends AbstractFixture
         $this->manager->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
-        return 'sylius_admin_user';
+        return 'app_admin_user';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptionsNode(ArrayNodeDefinition $optionsNode): void
     {
         $optionsNode

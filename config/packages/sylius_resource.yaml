@@ -1,0 +1,11 @@
+sylius_resource:
+    resources:
+        app.quiz:
+            classes:
+                model: App\Entity\Quiz\Quiz
+        app.question:
+            classes:
+                model: App\Entity\Quiz\Question
+        app.answer:
+            classes:
+                model: App\Entity\Quiz\Answer
