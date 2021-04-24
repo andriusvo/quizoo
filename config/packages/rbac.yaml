@@ -21,5 +21,15 @@ sylius_rbac:
                 - app.quiz.create
                 - app.quiz.update
             security_roles: [ROLE_ADMIN]
+        ROLE_TEACHER:
+            name: Teacher
+            description: Teacher role
+            security_roles: [ROLE_TEACHER]
+            permissions:
+        ROLE_STUDENT:
+            name: Student
+            description: Student role
+            security_roles: [ROLE_STUDENT]
+            permissions:
     roles_hierarchy:
         ROLE_SUPERADMIN: [ROLE_ADMIN]

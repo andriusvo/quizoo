@@ -113,4 +113,9 @@ class User extends AdminUser implements IdentityInterface
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
+
+    public function __toString(): string
+    {
+        return $this->getFullName();
+    }
 }

@@ -5,6 +5,8 @@ sylius_grid:
                 name: doctrine/orm
                 options:
                     class: "%app.model.subject.class%"
+                    repository:
+                        method: createForGrid
             fields:
                 title:
                     label: sylius.ui.title
@@ -19,11 +21,23 @@ sylius_grid:
                     type: string
                     sortable: ~
             filters:
-                search:
+                title:
                     type: string
-                    label: sylius.ui.search
+                    label: sylius.ui.title
+                    form_options:
+                        type: contains
+                code:
+                    type: string
+                    label: sylius.ui.code
+                    form_options:
+                        type: contains
+                supervisor:
+                    type: string
+                    label: app.ui.supervisor
                     options:
-                        fields: [title]
+                        fields: [supervisor.firstName, supervisor.lastName]
+                    form_options:
+                        type: contains
             actions:
                 main:
                     create:

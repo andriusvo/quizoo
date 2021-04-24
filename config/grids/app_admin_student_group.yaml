@@ -5,6 +5,8 @@ sylius_grid:
                 name: doctrine/orm
                 options:
                     class: "%app.model.student_group.class%"
+                    repository:
+                        method: createForGrid
             fields:
                 code:
                     label: sylius.ui.code
@@ -17,11 +19,18 @@ sylius_grid:
                     options:
                         template: "@PlatformAdmin/StudentGroup/Grid/Field/_studentsCount.html.twig"
             filters:
-                search:
+                code:
                     type: string
-                    label: sylius.ui.search
+                    label: sylius.ui.code
+                    form_options:
+                        type: contains
+                students:
+                    type: string
+                    label: app.ui.student
                     options:
-                        fields: [code]
+                        fields: [student.firstName, student.lastName]
+                    form_options:
+                        type: contains
             actions:
                 main:
                     create:

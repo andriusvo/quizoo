@@ -17,17 +17,21 @@
 
 declare(strict_types=1);
 
-namespace App\Constants;
+namespace App\Repository\Subject;
 
-class AuthorizationRoles
+use Doctrine\ORM\QueryBuilder;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+
+class SubjectRepository extends EntityRepository
 {
-    public const ROLE_SUPERADMIN = 'ROLE_SUPERADMIN';
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_TEACHER = 'ROLE_TEACHER';
-    public const ROLE_STUDENT = 'ROLE_STUDENT';
+    public function createForGrid(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('subject');
 
-    public const ADMIN_ROLES = [
-        self::ROLE_SUPERADMIN,
-        self::ROLE_ADMIN,
-    ];
+        $qb
+            ->select('subject', 'supervisor')
+            ->innerJoin('subject.supervisor', 'supervisor');
+
+        return $qb;
+    }
 }

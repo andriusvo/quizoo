@@ -1,0 +1,13 @@
+app_teacher_index:
+    path: /teachers
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.admin_user:indexAction
+        _sylius:
+            template: "@PlatformAdmin/Crud/index.html.twig"
+            grid: app_teacher
+            vars:
+                icon: cubes
+                header: app.ui.teachers
+                templates:
+                    breadcrumb: "@PlatformAdmin/Teacher/Index/_breadcrumb.html.twig"

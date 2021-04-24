@@ -19,11 +19,10 @@ declare(strict_types=1);
 
 namespace App\Form\Type\Group;
 
-use App\Form\Type\User\UserAutocompleteChoiceType;
+use App\Form\Type\User\StudentAutocompleteChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Count;
 
 class StudentGroupType extends AbstractResourceType
 {
@@ -34,7 +33,7 @@ class StudentGroupType extends AbstractResourceType
             ->addEventSubscriber(new AddCodeFormSubscriber())
             ->add(
                 'students',
-                UserAutocompleteChoiceType::class,
+                StudentAutocompleteChoiceType::class,
                 [
                     'multiple' => true,
                     'required' => true,
