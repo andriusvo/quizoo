@@ -73,7 +73,7 @@ sylius_fixtures:
                                         correct: true
                             -
                                 title: Is it plural?
-                                type: boolean_answer
+                                type: single_text
                                 quiz: 'VU-18-19'
                                 answers:
                                     -

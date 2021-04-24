@@ -23,13 +23,11 @@ class QuestionTypes
 {
     public const SINGLE_ANSWER = 'single_answer';
     public const MULTIPLE_ANSWER = 'multiple_answer';
-    public const BOOLEAN_ANSWER = 'boolean_answer';
     public const FREE_TEXT_ANSWER = 'free_text_answer';
 
     public const ALL = [
         'app.question.type.single' => self::SINGLE_ANSWER,
         'app.question.type.multiple' => self::MULTIPLE_ANSWER,
-        'app.question.type.boolean' => self::BOOLEAN_ANSWER,
         'app.question.type.free_text' => self::FREE_TEXT_ANSWER,
     ];
 }

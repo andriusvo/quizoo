@@ -1,0 +1,137 @@
+{% extends '@PlatformAdmin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
+{% block title %}{{ parent() }}{{ 'sylius.ui.faqs'|trans }}{% endblock %}
+
+{% block content %}
+
+    <div class="ui stackable grid">
+        <div class="twelve wide column">
+            {{ headers.default('sylius.ui.faqs'|trans, 'question', '') }}
+        </div>
+    </div>
+
+    <div class="ui two column grid">
+        <div class="column">
+            <div class="ui raised very padded text container segment">
+                <div class="column">
+                    <div class="ui divided items">
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">How to use Quizoo?</a>
+                                <div class="description">
+                                    <p>If you use this platform for the first time, please check our guide on
+                                        YouTube!</p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui right floated primary button">
+                                        Watch video
+                                        <i class="right chevron icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">How to create new quiz?</a>
+                                <div class="description">
+                                    <p>If you have any doubts how to create a new quiz, please check our guide on
+                                        YouTube!</p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui right floated primary button">
+                                        Watch video
+                                        <i class="right chevron icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">How to generate results?</a>
+                                <div class="description">
+                                    <p>If you have any problems on generating results, please check our guide on
+                                        YouTube!</p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui right floated primary button">
+                                        Watch video
+                                        <i class="right chevron icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui raised very padded text container segment">
+                <div class="column">
+                    <div class="ui divided items">
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">How student can access a quiz?</a>
+                                <div class="description">
+                                    <p>
+                                        Once you created a quiz, you will see a code. Then you can present it to
+                                        students or copy a link and send directly to them!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">What are possible types of questions?</a>
+                                <div class="description">
+                                    <p>
+                                    There are 3 possible types of questions:
+                                    <div class="ui bulleted list">
+                                        <div class="item">Single choice</div>
+                                        <div class="item">Multiple choice</div>
+                                        <div class="item">Free text input</div>
+                                    </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="image">
+                                <img src="https://image.flaticon.com/icons/png/512/2080/2080743.png" alt="Question"/>
+                            </div>
+                            <div class="content">
+                                <a class="header">I can't find my answer here</a>
+                                <div class="description">
+                                    <p>If you have any problems which are not described here, feel free to contact us!</p>
+                                </div>
+                                <div class="extra">
+                                    <div class="ui right floated primary button">
+                                        Contact us
+                                        <i class="right chevron icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
