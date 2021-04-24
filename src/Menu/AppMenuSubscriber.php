@@ -63,6 +63,12 @@ class AppMenuSubscriber implements EventSubscriberInterface
         }
 
         $configurationMenu->removeChild('locales');
+
+        $configurationMenu
+            ->addChild('teachers', ['route' => 'app_teacher_index'])
+            ->setLabel('app.ui.teachers')
+            ->setLabelAttribute('icon', 'user circle outline');
+
         $configurationMenu
             ->addChild('subjects', ['route' => 'app_subject_index'])
             ->setLabel('app.ui.subjects')

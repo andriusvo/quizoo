@@ -12,15 +12,18 @@ sylius_fixtures:
                                 validFrom: '2021-04-30 15:00'
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-15-18'
+                                owner: 'teacher-1'
                             -
                                 title: English quiz on verbs
                                 subject: 'functional-programming'
                                 validFrom: '2021-04-30 15:00'
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-18-19'
+                                owner: 'teacher-2'
                             -
                                 title: Object oriented quiz on polymorphisms
                                 subject: 'communication'
                                 validFrom: '2021-04-30 18:00'
                                 validTo: '2021-04-30 18:30'
                                 code: 'VU-20-12'
+                                owner: 'teacher-3'

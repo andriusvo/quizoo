@@ -9,12 +9,12 @@ sylius_fixtures:
                             -
                                 code: 'object-oriented-programming'
                                 title: 'Object oriented programming'
-                                supervisor: 'admin'
+                                supervisor: 'teacher-1'
                             -
                                 code: 'functional-programming'
                                 title: 'Functional programming'
-                                supervisor: 'admin'
+                                supervisor: 'teacher-2'
                             -
                                 code: 'communication'
                                 title: 'Communication'
-                                supervisor: 'admin'
+                                supervisor: 'teacher-3'

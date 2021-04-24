@@ -12,8 +12,10 @@ sylius_resource:
         app.student_group:
             classes:
                 model: App\Entity\Group\StudentGroup
+                repository: App\Repository\Group\StudentGroupRepository
                 form: App\Form\Type\Group\StudentGroupType
         app.subject:
             classes:
                 model: App\Entity\Subject\Subject
+                repository: App\Repository\Subject\SubjectRepository
                 form: App\Form\Type\Subject\SubjectType

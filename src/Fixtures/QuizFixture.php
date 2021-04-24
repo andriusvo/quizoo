@@ -52,7 +52,8 @@ class QuizFixture extends AbstractFixture
             $quiz->setValidTo(new \DateTime($quizData['validTo']));
             $quiz->setCode($quizData['code']);
             $quiz->setTitle($quizData['title']);
-            $quiz->setOwner($this->entityManager->getRepository(User::class)->findOneBy([]));
+            $owner = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $quizData['owner']]);
+            $quiz->setOwner($owner);
 
             $subject = $this->entityManager->getRepository(Subject::class)->findOneBy(['code' => $quizData['subject']]);
             $quiz->setSubject($subject);
@@ -82,6 +83,7 @@ class QuizFixture extends AbstractFixture
                         ->booleanNode('finished')->defaultFalse()->end()
                         ->scalarNode('subject')->cannotBeEmpty()->end()
                         ->scalarNode('code')->cannotBeEmpty()->end()
+                        ->scalarNode('owner')->cannotBeEmpty()->end()
                         ->scalarNode('title')->cannotBeEmpty()->end();
     }
 }

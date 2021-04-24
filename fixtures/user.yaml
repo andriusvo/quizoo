@@ -18,6 +18,8 @@ sylius_fixtures:
                                 last_name: First
                                 username: student-1
                                 group: 'PS-4K-4'
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_STUDENT
                             -
                                 email: student-2@example.com
                                 password: student
@@ -25,10 +27,38 @@ sylius_fixtures:
                                 last_name: Second
                                 username: student-2
                                 group: 'PS-2-4'
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_STUDENT
                             -
                                 email: student-3@example.com
                                 password: student
                                 first_name: Student
-                                last_name: Second
+                                last_name: Third
                                 username: student-3
                                 group: 'PS-8-4'
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_STUDENT
+                            -
+                                email: teacher-1@example.com
+                                password: teacher
+                                first_name: Teacher
+                                last_name: First
+                                username: teacher-1
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_TEACHER
+                            -
+                                email: teacher-2@example.com
+                                password: teacher
+                                first_name: Teacher
+                                last_name: Second
+                                username: teacher-2
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_TEACHER
+                            -
+                                email: teacher-3@example.com
+                                password: teacher
+                                first_name: Teacher
+                                last_name: Third
+                                username: teacher-3
+                                roles:
+                                    - !php/const App\Constants\AuthorizationRoles::ROLE_TEACHER

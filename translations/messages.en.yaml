@@ -10,6 +10,7 @@ app:
         manage_student_group: Manage student groups
         edit_student_group: Edit student group
         student_groups: Student groups
+        student: Student
         new_student_group: New student group
         subjects: Subjects
         subject: Subject
@@ -18,3 +19,8 @@ app:
         edit_subject: Edit subject
         supervisor: Supervisor
         students_count: Students count
+        teachers: Teachers
+
+sylius:
+    ui:
+        new_admin_user: New user

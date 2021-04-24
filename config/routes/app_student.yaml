@@ -1,5 +1,5 @@
-app_admin_ajax_user_by_name:
-    path: /users/search
+app_admin_ajax_student_by_name:
+    path: /students/search
     methods: [GET]
     defaults:
         _controller: sylius.controller.admin_user:indexAction
@@ -11,11 +11,11 @@ app_admin_ajax_user_by_name:
                 method: findByNamePart
                 arguments:
                     phrase: $phrase
-                    role: !php/const App\Constants\AuthorizationRoles::ROLE_TEACHER
+                    role: !php/const App\Constants\AuthorizationRoles::ROLE_STUDENT
                     limit: 25
 
-app_admin_ajax_user_by_id:
-    path: /users/id
+app_admin_ajax_student_by_id:
+    path: /students/id
     methods: [GET]
     defaults:
         _controller: sylius.controller.admin_user:indexAction
