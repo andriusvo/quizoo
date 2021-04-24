@@ -1,0 +1,13 @@
+app_quiz:
+    resource: |
+        alias: app.quiz
+        templates: PlatformAdminBundle:Crud
+        except: ['bulkDelete', 'delete']
+        redirect: index
+        grid: app_quiz
+        vars:
+            all:
+                subheader: app.ui.manage_quizzes
+            index:
+                icon: globe
+    type: sylius.resource

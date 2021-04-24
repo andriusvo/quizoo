@@ -1,0 +1,33 @@
+sylius_grid:
+    grids:
+        app_subject:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%app.model.subject.class%"
+            fields:
+                title:
+                    label: sylius.ui.title
+                    type: string
+                    sortable: ~
+                code:
+                    label: sylius.ui.code
+                    type: string
+                    sortable: ~
+                supervisor:
+                    label: app.ui.supervisor
+                    type: string
+                    sortable: ~
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [title]
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update

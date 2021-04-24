@@ -2,6 +2,12 @@
     "admin-platform/admin-bundle": {
         "version": "v0.3.0"
     },
+    "admin-platform/rbac": {
+        "version": "v1.0.0"
+    },
+    "admin-platform/rbac-bundle": {
+        "version": "v1.1.0"
+    },
     "behat/behat": {
         "version": "v3.5.0"
     },

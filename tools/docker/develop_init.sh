@@ -32,14 +32,11 @@ time composer --no-interaction install
 bin/console cache:clear --env=prod
 
 if [ "${NFQ_PROJECT_INIT:-1}" = '1' ]; then
-    echo -e '\n## Generating  JWT token keys... '
-    openssl genrsa -passout pass:project -out var/jwt/private.pem -aes256 4096
-    openssl rsa -passin pass:project -pubout -in var/jwt/private.pem -out var/jwt/public.pem
-
     echo -e '\n## DB setup ... '
     bin/console doctrine:database:drop --force --if-exists
     bin/console doctrine:database:create
     bin/console doctrine:migrations:migrate --no-interaction
+    bin/console sylius:rbac:initialize
     bin/console sylius:fixtures:load default --no-interaction
 
 

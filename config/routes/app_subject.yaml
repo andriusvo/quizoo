@@ -1,0 +1,13 @@
+app_subject:
+    resource: |
+        alias: app.subject
+        templates: PlatformAdminBundle:Crud
+        except: ['bulkDelete']
+        redirect: index
+        grid: app_subject
+        vars:
+            all:
+                subheader: app.ui.manage_subjects
+            index:
+                icon: tags
+    type: sylius.resource

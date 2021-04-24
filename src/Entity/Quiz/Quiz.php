@@ -19,10 +19,11 @@ declare(strict_types=1);
 
 namespace App\Entity\Quiz;
 
+use App\Entity\Subject\Subject;
+use App\Entity\User\User;
 use App\Model\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Platform\Bundle\AdminBundle\Model\AdminUser;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -71,9 +72,9 @@ class Quiz implements ResourceInterface, TimestampableInterface
     private $code;
 
     /**
-     * @var AdminUser
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Platform\Bundle\AdminBundle\Model\AdminUser")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $owner;
@@ -86,9 +87,10 @@ class Quiz implements ResourceInterface, TimestampableInterface
     private $title;
 
     /**
-     * @var string
+     * @var Subject
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject\Subject")
+     * @ORM\JoinColumn(name="subject_id", referencedColumnName="id", nullable=false)
      */
     private $subject;
 
@@ -116,7 +118,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this->id;
     }
 
-    public function getValidFrom(): \DateTime
+    public function getValidFrom(): ?\DateTime
     {
         return $this->validFrom;
     }
@@ -128,7 +130,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function getValidTo(): \DateTime
+    public function getValidTo(): ?\DateTime
     {
         return $this->validTo;
     }
@@ -140,7 +142,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -152,19 +154,19 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function getOwner(): AdminUser
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
 
-    public function setOwner(AdminUser $owner): Quiz
+    public function setOwner(User $owner): Quiz
     {
         $this->owner = $owner;
 
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -176,12 +178,12 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function getSubject(): string
+    public function getSubject(): ?Subject
     {
         return $this->subject;
     }
 
-    public function setSubject(string $subject): Quiz
+    public function setSubject(Subject $subject): Quiz
     {
         $this->subject = $subject;
 

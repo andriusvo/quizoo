@@ -1,9 +1,14 @@
 imports:
-    - {resource: '../../fixtures/'}
+    - { resource: '../../fixtures/' }
 
 sylius_fixtures:
     suites:
         default:
             listeners:
                 logger: ~
-                orm_purger: ~
+                orm_purger:
+                    options:
+                        exclude:
+                            - sylius_permission
+                            - sylius_role
+                            - sylius_role_permission

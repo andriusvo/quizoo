@@ -9,3 +9,11 @@ sylius_resource:
         app.answer:
             classes:
                 model: App\Entity\Quiz\Answer
+        app.student_group:
+            classes:
+                model: App\Entity\Group\StudentGroup
+                form: App\Form\Type\Group\StudentGroupType
+        app.subject:
+            classes:
+                model: App\Entity\Subject\Subject
+                form: App\Form\Type\Subject\SubjectType

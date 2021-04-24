@@ -1,0 +1,20 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                app_subject:
+                    priority: 25
+                    options:
+                        subjects:
+                            -
+                                code: 'object-oriented-programming'
+                                title: 'Object oriented programming'
+                                supervisor: 'admin'
+                            -
+                                code: 'functional-programming'
+                                title: 'Functional programming'
+                                supervisor: 'admin'
+                            -
+                                code: 'communication'
+                                title: 'Communication'
+                                supervisor: 'admin'

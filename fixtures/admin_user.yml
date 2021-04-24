@@ -1,9 +1,0 @@
-sylius_fixtures:
-    suites:
-        default:
-            fixtures:
-                app_admin_user:
-                    priority: 30
-                    options:
-                        users:
-                            - { email: admin@example.com, password: admin, username: admin }
