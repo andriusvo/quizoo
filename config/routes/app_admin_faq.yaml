@@ -1,0 +1,6 @@
+app_admin_faq:
+    path: /faq
+    methods: [GET, POST]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: '@PlatformAdmin/Faq/_layout.html.twig'

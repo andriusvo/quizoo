@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "admin-platform/admin-bundle",
-            "version": "v0.5.2",
+            "version": "v0.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/admin-platform/AdminBundle.git",
-                "reference": "ef98ee1020bc6b05e7b70bff7c88ab9acbfdeb3f"
+                "reference": "9d397ca023946b3fbcbbc641e5f9a587dd5a03b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/admin-platform/AdminBundle/zipball/ef98ee1020bc6b05e7b70bff7c88ab9acbfdeb3f",
-                "reference": "ef98ee1020bc6b05e7b70bff7c88ab9acbfdeb3f",
+                "url": "https://api.github.com/repos/admin-platform/AdminBundle/zipball/9d397ca023946b3fbcbbc641e5f9a587dd5a03b6",
+                "reference": "9d397ca023946b3fbcbbc641e5f9a587dd5a03b6",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "MIT"
             ],
             "description": "Admin platform for Symfony projects.",
-            "time": "2019-10-17T09:53:46+00:00"
+            "time": "2019-12-05T12:43:17+00:00"
         },
         {
             "name": "admin-platform/rbac",

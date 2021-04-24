@@ -1,3 +1,17 @@
+app_admin_student_index:
+    path: /students
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.admin_user:indexAction
+        _sylius:
+            template: "@PlatformAdmin/Crud/index.html.twig"
+            grid: app_student
+            vars:
+                icon: cubes
+                header: app.ui.students
+                templates:
+                    breadcrumb: "@PlatformAdmin/Student/Index/_breadcrumb.html.twig"
+
 app_admin_ajax_student_by_name:
     path: /students/search
     methods: [GET]

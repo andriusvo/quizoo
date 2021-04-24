@@ -1,0 +1,35 @@
+{% extends '@SyliusUi/Layout/sidebar.html.twig' %}
+
+{% block title %}Quizoo | {% endblock %}
+
+{% block stylesheets %}
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'assets/admin/css/style.css'} %}
+{% endblock %}
+
+{% block topbar %}
+    <a class="icon item" id="sidebar-toggle" title="{{ 'sylius.ui.toggle_sidebar'|trans }}">
+        <i class="sidebar icon"></i>
+    </a>
+
+    <div class="ui right floated simple item">
+        <a href="{{ path('app_admin_faq') }}">
+            <i class="question icon"></i>
+            {{ 'sylius.ui.faqs'|trans }}
+        </a>
+    </div>
+
+    {% include '@PlatformAdmin/_security.html.twig' %}
+{% endblock %}
+
+{% block sidebar %}
+    <a class="item" href="{{ path('admin_platform_admin_dashboard_index') }}"><b>Quizoo</b></a>
+    {{ knp_menu_render('admin_platform.menu.main', {'template': '@SyliusUi/Menu/sidebar.html.twig', 'currentClass': 'active'}) }}
+{% endblock %}
+
+{% block footer %}
+    {{ 'sylius.ui.powered_by'|trans }} <a href="http://quizoo.com" target="_blank">Quizoo</a>.
+{% endblock %}
+
+{% block javascripts %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/admin/js/app.js'} %}
+{% endblock %}

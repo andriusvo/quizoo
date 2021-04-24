@@ -1,24 +1,2 @@
 platform_admin:
     resource: "@PlatformAdminBundle/Resources/config/routing.xml"
-
-admin_platform_admin_user:
-    resource: |
-        alias: sylius.admin_user
-        section: admin
-        path: users
-        templates: PlatformAdminBundle:Crud
-        except: ['show']
-        redirect: update
-        grid: admin_platform_admin_users
-        permission: true
-        form:
-            options:
-                validation_groups: [platform_admin]
-        vars:
-            all:
-                subheader: sylius.ui.manage_users_able_to_access_administration_panel
-                templates:
-                    form: '@PlatformAdmin/AdminUser/_form.html.twig'
-            index:
-                icon: lock
-    type: sylius.resource

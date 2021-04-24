@@ -82,8 +82,13 @@ class AppMenuSubscriber implements EventSubscriberInterface
             ->setLabel('app.ui.students');
 
         $studentMenu
+            ->addChild('students_list', ['route' => 'app_admin_student_index'])
+            ->setLabel('app.ui.students')
+            ->setLabelAttribute('icon', 'user');
+
+        $studentMenu
             ->addChild('student_group', ['route' => 'app_student_group_index'])
             ->setLabel('app.ui.student_group')
-            ->setLabelAttribute('icon', 'user');
+            ->setLabelAttribute('icon', 'suitcase');
     }
 }
