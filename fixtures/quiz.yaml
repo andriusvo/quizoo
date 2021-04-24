@@ -8,19 +8,19 @@ sylius_fixtures:
                         quizes:
                             -
                                 title: Maths quiz on sums
-                                subject: Maths
+                                subject: 'object-oriented-programming'
                                 validFrom: '2021-04-30 15:00'
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-15-18'
                             -
                                 title: English quiz on verbs
-                                subject: English
+                                subject: 'functional-programming'
                                 validFrom: '2021-04-30 15:00'
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-18-19'
                             -
                                 title: Object oriented quiz on polymorphisms
-                                subject: Object oriented programming
+                                subject: 'communication'
                                 validFrom: '2021-04-30 18:00'
                                 validTo: '2021-04-30 18:30'
                                 code: 'VU-20-12'

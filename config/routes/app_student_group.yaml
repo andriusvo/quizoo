@@ -1,0 +1,13 @@
+app_student_group:
+    resource: |
+        alias: app.student_group
+        templates: PlatformAdminBundle:Crud
+        except: ['bulkDelete']
+        redirect: index
+        grid: app_student_group
+        vars:
+            all:
+                subheader: app.ui.manage_student_group
+            index:
+                icon: user
+    type: sylius.resource

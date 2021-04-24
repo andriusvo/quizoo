@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace App\Fixtures;
 
-use App\Entity\Quiz\Quiz;
 use App\Entity\Subject\Subject;
 use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,13 +26,13 @@ use Sylius\Bundle\FixturesBundle\Fixture\AbstractFixture;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-class QuizFixture extends AbstractFixture
+class SubjectFixture extends AbstractFixture
 {
-    /** @var FactoryInterface */
-    private $factory;
-
     /** @var EntityManagerInterface */
     private $entityManager;
+
+    /** @var FactoryInterface */
+    private $factory;
 
     public function __construct(EntityManagerInterface $entityManager, FactoryInterface $factory)
     {
@@ -43,21 +42,20 @@ class QuizFixture extends AbstractFixture
 
     public function load(array $options): void
     {
-        foreach ($options['quizes'] as $quizData) {
-            /** @var Quiz $quiz */
-            $quiz = $this->factory->createNew();
+        foreach ($options['subjects'] as $subjectData) {
+            /** @var Subject $subject */
+            $subject = $this->factory->createNew();
+            $subject->setCode($subjectData['code']);
+            $subject->setTitle($subjectData['title']);
 
-            $quiz->setFinished($quizData['finished']);
-            $quiz->setValidFrom(new \DateTime($quizData['validFrom']));
-            $quiz->setValidTo(new \DateTime($quizData['validTo']));
-            $quiz->setCode($quizData['code']);
-            $quiz->setTitle($quizData['title']);
-            $quiz->setOwner($this->entityManager->getRepository(User::class)->findOneBy([]));
+            $supervisor = $this
+                ->entityManager
+                ->getRepository(User::class)
+                ->findOneBy(['username' => $subjectData['supervisor']]);
 
-            $subject = $this->entityManager->getRepository(Subject::class)->findOneBy(['code' => $quizData['subject']]);
-            $quiz->setSubject($subject);
+            $subject->setSupervisor($supervisor);
 
-            $this->entityManager->persist($quiz);
+            $this->entityManager->persist($subject);
         }
 
         $this->entityManager->flush();
@@ -65,23 +63,20 @@ class QuizFixture extends AbstractFixture
 
     public function getName(): string
     {
-        return 'app_quiz';
+        return 'app_subject';
     }
 
     protected function configureOptionsNode(ArrayNodeDefinition $optionsNode): void
     {
         $optionsNode
             ->children()
-                ->arrayNode('quizes')
+                ->arrayNode('subjects')
                 ->isRequired()
                 ->requiresAtLeastOneElement()
                 ->arrayPrototype()
                     ->children()
-                        ->scalarNode('validFrom')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('validTo')->isRequired()->cannotBeEmpty()->end()
-                        ->booleanNode('finished')->defaultFalse()->end()
-                        ->scalarNode('subject')->cannotBeEmpty()->end()
-                        ->scalarNode('code')->cannotBeEmpty()->end()
-                        ->scalarNode('title')->cannotBeEmpty()->end();
+                        ->scalarNode('code')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('title')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('supervisor')->isRequired()->cannotBeEmpty()->end();
     }
 }

@@ -19,30 +19,33 @@ declare(strict_types=1);
 
 namespace App\Fixtures;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Platform\Bundle\AdminBundle\Model\AdminUserInterface;
+use App\Constants\AuthorizationRoles;
+use App\Entity\Group\StudentGroup;
+use App\Entity\User\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Bundle\FixturesBundle\Fixture\AbstractFixture;
+use Sylius\Component\Rbac\Model\Role;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-class AdminUserFixture extends AbstractFixture
+class UserFixture extends AbstractFixture
 {
-    /** @var ObjectManager */
-    private $manager;
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     /** @var FactoryInterface */
     private $factory;
 
-    public function __construct(ObjectManager $manager, FactoryInterface $factory)
+    public function __construct(EntityManagerInterface $entityManager, FactoryInterface $factory)
     {
-        $this->manager = $manager;
+        $this->entityManager = $entityManager;
         $this->factory = $factory;
     }
 
     public function load(array $options): void
     {
         foreach ($options['users'] as $userData) {
-            /** @var AdminUserInterface $user */
+            /** @var User $user */
             $user = $this->factory->createNew();
 
             $user->setEmail($userData['email']);
@@ -53,19 +56,30 @@ class AdminUserFixture extends AbstractFixture
             $user->setUsername($userData['username'] ?? $userData['email']);
             $user->setLocaleCode($userData['locale']);
 
-            foreach ($userData['roles'] as $role) {
-                $user->addRole($role);
+            foreach ($userData['roles'] as $roleCode) {
+                $role = $this->entityManager->getRepository(Role::class)->findOneBy(['code' => $roleCode]);
+                $user->addAuthorizationRole($role);
             }
 
-            $this->manager->persist($user);
+            if (isset($userData['group'])) {
+                /** @var StudentGroup $studentGroup */
+                $studentGroup = $this
+                    ->entityManager
+                    ->getRepository(StudentGroup::class)
+                    ->findOneBy(['code' => $userData['group']]);
+
+                $studentGroup->addStudent($user);
+            }
+
+            $this->entityManager->persist($user);
         }
 
-        $this->manager->flush();
+        $this->entityManager->flush();
     }
 
     public function getName(): string
     {
-        return 'app_admin_user';
+        return 'app_user';
     }
 
     protected function configureOptionsNode(ArrayNodeDefinition $optionsNode): void
@@ -81,11 +95,12 @@ class AdminUserFixture extends AbstractFixture
                         ->scalarNode('password')->isRequired()->cannotBeEmpty()->end()
                         ->booleanNode('enabled')->defaultTrue()->end()
                         ->arrayNode('roles')
-                            ->defaultValue([AdminUserInterface::DEFAULT_ADMIN_ROLE])
+                            ->defaultValue([AuthorizationRoles::ROLE_SUPERADMIN])
                             ->requiresAtLeastOneElement()
                             ->scalarPrototype()->cannotBeEmpty()->end()
                         ->end()
                         ->scalarNode('first_name')->defaultNull()->end()
+                        ->scalarNode('group')->defaultNull()->end()
                         ->scalarNode('last_name')->defaultNull()->end()
                         ->scalarNode('username')->defaultNull()->end()
                         ->scalarNode('locale')->defaultValue('en')->end()

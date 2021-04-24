@@ -1,0 +1,33 @@
+sylius_grid:
+    grids:
+        app_student_group:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%app.model.student_group.class%"
+            fields:
+                code:
+                    label: sylius.ui.code
+                    type: string
+                    sortable: ~
+                studentsCount:
+                    label: app.ui.students_count
+                    type: twig
+                    path: .
+                    options:
+                        template: "@PlatformAdmin/StudentGroup/Grid/Field/_studentsCount.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [code]
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

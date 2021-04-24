@@ -1,0 +1,21 @@
+App\Entity\User\User:
+    exclusion_policy: ALL
+    xml_root_name: user
+    properties:
+        id:
+            expose: true
+            type: integer
+            xml_attribute: true
+            groups: [Default, Autocomplete]
+        name:
+            expose: true
+            type: string
+            groups: [Default, Autocomplete]
+    virtual_properties:
+        getId:
+            serialized_name: id
+            groups: [Default, Autocomplete]
+        getFullName:
+            serialized_name: full_name
+            type: string
+            groups: [Default, Autocomplete]

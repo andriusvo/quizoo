@@ -16,6 +16,7 @@ import 'sylius/ui/sylius-form-collection'
 import 'sylius/ui/sylius-prototype-handler'
 import 'sylius/ui/sylius-require-confirmation'
 import 'sylius/ui/sylius-toggle'
+import 'sylius/ui/sylius-auto-complete'
 
 $(document).ready(() => {
     // ### SYLIUS ###
@@ -50,6 +51,7 @@ $(document).ready(() => {
     $('[data-requires-confirmation]').requireConfirmation();
     $('[data-bulk-action-requires-confirmation]').bulkActionRequireConfirmation();
     $('[data-toggles]').toggleElement();
+    $('.sylius-autocomplete').autoComplete();
 
     $('.special.cards .image').dimmer({
         on: 'hover',

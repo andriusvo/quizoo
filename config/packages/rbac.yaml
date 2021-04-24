@@ -1,0 +1,25 @@
+sylius_rbac:
+    driver: doctrine/orm
+
+    roles:
+        ROLE_SUPERADMIN:
+            name: Super administrator
+            description: Super administrator user
+            security_roles: [ROLE_SUPERADMIN, ROLE_ADMIN]
+        ROLE_ADMIN:
+            name: Administrator
+            description: Administrator user
+            permissions:
+                - sylius.admin_user.index
+                - sylius.admin_user.create
+                - sylius.admin_user.update
+                - sylius.locale.index
+                - sylius.locale.update
+                - sylius.locale.create
+                - app.quiz.index
+                - app.quiz.show
+                - app.quiz.create
+                - app.quiz.update
+            security_roles: [ROLE_ADMIN]
+    roles_hierarchy:
+        ROLE_SUPERADMIN: [ROLE_ADMIN]

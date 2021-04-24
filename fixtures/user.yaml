@@ -1,0 +1,34 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                app_user:
+                    priority: 30
+                    options:
+                        users:
+                            -   email: admin@example.com
+                                password: admin
+                                first_name: Administrator
+                                last_name: Best
+                                username: admin
+                            -
+                                email: student-1@example.com
+                                password: student
+                                first_name: Student
+                                last_name: First
+                                username: student-1
+                                group: 'PS-4K-4'
+                            -
+                                email: student-2@example.com
+                                password: student
+                                first_name: Student
+                                last_name: Second
+                                username: student-2
+                                group: 'PS-2-4'
+                            -
+                                email: student-3@example.com
+                                password: student
+                                first_name: Student
+                                last_name: Second
+                                username: student-3
+                                group: 'PS-8-4'

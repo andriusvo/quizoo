@@ -1,11 +1,18 @@
 {
     "type": "project",
     "license": "proprietary",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:admin-platform/SyliusRbacBundle.git"
+        }
+    ],
     "require": {
         "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "admin-platform/admin-bundle": "^0.5.2",
+        "admin-platform/rbac-bundle": "^1.1",
         "doctrine/doctrine-migrations-bundle": "^2",
         "sylius/fixtures-bundle": "^1.4",
         "symfony/console": "4.2.*",

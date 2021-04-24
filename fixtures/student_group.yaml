@@ -1,0 +1,14 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                app_student_group:
+                    priority: 40
+                    options:
+                        groups:
+                            -
+                                code: 'PS-4K-4'
+                            -
+                                code: 'PS-2-4'
+                            -
+                                code: 'PS-8-4'

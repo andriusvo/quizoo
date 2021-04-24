@@ -1,0 +1,20 @@
+app:
+    ui:
+        quiz_configuration: Quiz configuration
+        quizzes: Quizzes
+        edit_quiz: Edit quiz
+        new_quiz: New quiz
+        manage_quizzes: Manage quizzes
+        students: Students
+        student_group: Student groups
+        manage_student_group: Manage student groups
+        edit_student_group: Edit student group
+        student_groups: Student groups
+        new_student_group: New student group
+        subjects: Subjects
+        subject: Subject
+        manage_subjects: Manage subjects
+        new_subject: New subject
+        edit_subject: Edit subject
+        supervisor: Supervisor
+        students_count: Students count

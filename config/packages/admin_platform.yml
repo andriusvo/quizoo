@@ -1,3 +1,11 @@
 imports:
     - { resource: "@PlatformAdminBundle/Resources/config/app/config.yml" }
     - { resource: "@PlatformAdminBundle/Resources/config/app/doctrine_driver.yml" }
+
+sylius_user:
+    resources:
+        admin:
+            user:
+                classes:
+                    model: App\Entity\User\User
+                    repository: App\Repository\User\UserRepository

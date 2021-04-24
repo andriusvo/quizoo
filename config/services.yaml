@@ -15,14 +15,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    # Fixtures
     App\Fixtures\LocaleFixture:
         arguments:
             $manager: '@sylius.manager.locale'
             $factory: '@sylius.factory.locale'
 
-    App\Fixtures\AdminUserFixture:
+    App\Fixtures\UserFixture:
         arguments:
-            $manager: '@sylius.manager.admin_user'
             $factory: '@sylius.factory.admin_user'
 
     App\Fixtures\QuizFixture:
@@ -33,3 +33,32 @@ services:
         arguments:
             $questionFactory: '@app.factory.question'
             $answerFactory: '@app.factory.answer'
+
+    App\Fixtures\StudentGroupFixture:
+        arguments:
+            $manager: '@app.manager.student_group'
+            $factory: '@app.factory.student_group'
+
+    App\Fixtures\SubjectFixture:
+        arguments:
+            $factory: '@app.factory.subject'
+
+    # Resource form types
+    App\Form\Type\Subject\SubjectType:
+        arguments:
+            - '%app.model.subject.class%'
+        tags:
+            - { name: form.type }
+
+    App\Form\Type\Group\StudentGroupType:
+        arguments:
+            - '%app.model.student_group.class%'
+        tags:
+            - { name: form.type }
+
+    # Form types
+    App\Form\Type\User\StudentType:
+        arguments:
+            - '@sylius.repository.admin_user'
+        tags:
+            - { name: form.type }

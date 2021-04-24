@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77d9c916ce7c62a578ce3cd9b6d33645",
+    "content-hash": "04dd9dadefd103df8a98a6448d24232d",
     "packages": [
         {
             "name": "admin-platform/admin-bundle",
@@ -42,6 +42,130 @@
             ],
             "description": "Admin platform for Symfony projects.",
             "time": "2019-10-17T09:53:46+00:00"
+        },
+        {
+            "name": "admin-platform/rbac",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/admin-platform/Rbac.git",
+                "reference": "77e1ad4c0326c8f12ed88dac783e3891392e8266"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/admin-platform/Rbac/zipball/77e1ad4c0326c8f12ed88dac783e3891392e8266",
+                "reference": "77e1ad4c0326c8f12ed88dac783e3891392e8266",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "sylius/resource": "^1.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sylius\\Component\\Rbac\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sylius project",
+                    "homepage": "http://sylius.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "http://github.com/Sylius/Sylius/contributors"
+                },
+                {
+                    "name": "Paweł Jędrzejewski",
+                    "homepage": "http://pjedrzejewski.com"
+                }
+            ],
+            "description": "RBAC component for PHP applications.",
+            "homepage": "http://sylius.org",
+            "keywords": [
+                "acl",
+                "permissions",
+                "rbac",
+                "security"
+            ],
+            "time": "2018-01-31T13:04:52+00:00"
+        },
+        {
+            "name": "admin-platform/rbac-bundle",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:admin-platform/SyliusRbacBundle.git",
+                "reference": "7edbe3ca403b26fce237053e2aeeeec66988365d"
+            },
+            "require": {
+                "admin-platform/rbac": "^1.0",
+                "doctrine/doctrine-cache-bundle": "~1.0",
+                "php": "^7.1",
+                "sylius/resource-bundle": "^1.0",
+                "symfony/framework-bundle": "^3.2|^4.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2.5.0",
+                "phpspec/phpspec": "^3.0",
+                "symfony/form": "^3.2",
+                "twig/twig": "^1.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sylius\\Bundle\\RbacBundle\\": ""
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Sylius\\Bundle\\RbacBundle\\spec\\": "spec/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paweł Jędrzejewski",
+                    "homepage": "http://pjedrzejewski.com"
+                },
+                {
+                    "name": "Sylius project",
+                    "homepage": "http://sylius.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "http://github.com/Sylius/Sylius/contributors"
+                }
+            ],
+            "description": "Symfony2 Role-Based-Access-Control",
+            "homepage": "http://sylius.org",
+            "keywords": [
+                "permissions",
+                "rbac",
+                "roles",
+                "security"
+            ],
+            "time": "2018-08-03T07:12:37+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -7918,6 +8042,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -7925,12 +8050,12 @@
             "version": "1.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/facebook/php-webdriver.git",
+                "url": "https://github.com/php-webdriver/php-webdriver-archive.git",
                 "reference": "bd8c740097eb9f2fc3735250fc1912bc811a954e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/bd8c740097eb9f2fc3735250fc1912bc811a954e",
+                "url": "https://api.github.com/repos/php-webdriver/php-webdriver-archive/zipball/bd8c740097eb9f2fc3735250fc1912bc811a954e",
                 "reference": "bd8c740097eb9f2fc3735250fc1912bc811a954e",
                 "shasum": ""
             },
@@ -7978,6 +8103,7 @@
                 "selenium",
                 "webdriver"
             ],
+            "abandoned": "php-webdriver/webdriver",
             "time": "2018-05-16T17:37:13+00:00"
         },
         {
@@ -8656,6 +8782,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2018-10-30T05:52:18+00:00"
         },
         {
@@ -10041,7 +10168,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
