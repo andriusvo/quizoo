@@ -1,0 +1,5 @@
+app:
+    question:
+        error:
+            invalid_type: Answers should meet question type requirement
+            answers_count: Answers count should meet question type requirement
