@@ -11,3 +11,31 @@ app_student_group:
             index:
                 icon: user
     type: sylius.resource
+
+app_admin_ajax_student_group_by_code:
+    path: /student-group/search
+    methods: [GET]
+    defaults:
+        _controller: app.controller.student_group:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Autocomplete]
+            permission: true
+            repository:
+                method: findByNamePart
+                arguments:
+                    phrase: $phrase
+                    limit: 25
+
+app_admin_ajax_student_group_by_id:
+    path: /student-group/id
+    methods: [GET]
+    defaults:
+        _controller: app.controller.student_group:indexAction
+        _format: json
+        _sylius:
+            serialization_groups: [Autocomplete]
+            permission: true
+            repository:
+                method: findBy
+                arguments: [id: $id]

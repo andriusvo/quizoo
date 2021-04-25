@@ -6,6 +6,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $userRepository: '@sylius.repository.admin_user'
 
     App\:
         resource: '../src/*'
@@ -42,6 +44,11 @@ services:
     App\Fixtures\SubjectFixture:
         arguments:
             $factory: '@app.factory.subject'
+
+    App\Fixtures\ResponseFixture:
+        arguments:
+            $responseFactory: '@app.factory.response'
+            $responseAnswerFactory: '@app.factory.response_answer'
 
     # Resource form types
     App\Form\Type\Subject\SubjectType:

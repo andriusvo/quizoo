@@ -1,0 +1,27 @@
+<div id="details">
+    <h4 class="ui top attached large header">{{ 'app.ui.response_details'|trans }}</h4>
+    <div class="ui attached segment">
+        <div>
+            <table class="ui very basic celled table">
+                <tbody>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.student'|trans }}</strong></td>
+                    <td>{{ response.student }}</td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.start_date'|trans }}</strong></td>
+                    <td>{{ response.startDate|date('Y-m-d H:i') }}</td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.finish_date'|trans }}</strong></td>
+                    <td>{{ response.finishDate|date('Y-m-d H:i') }}</td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.score'|trans }}</strong></td>
+                    <td>{{ response.score }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

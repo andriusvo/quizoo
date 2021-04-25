@@ -1,0 +1,26 @@
+app_admin_response_show:
+    path: /responses/{id}
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:showAction
+        _sylius:
+            section: admin
+            permission: true
+            template: "@PlatformAdmin/Response/show.html.twig"
+
+app_admin_student_response_index:
+    path: /students/{id}/responses
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:indexAction
+        _sylius:
+            template: "@PlatformAdmin/Crud/index.html.twig"
+            grid: app_student_response
+            vars:
+                route:
+                    parameters:
+                        id: $id
+                icon: exchange
+                header: app.ui.responses
+                templates:
+                    breadcrumb: "@PlatformAdmin/Student/Response/_breadcrumb.html.twig"

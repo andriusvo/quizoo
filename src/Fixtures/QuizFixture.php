@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace App\Fixtures;
 
+use App\Entity\Group\StudentGroup;
 use App\Entity\Quiz\Quiz;
 use App\Entity\Subject\Subject;
 use App\Entity\User\User;
@@ -43,11 +44,10 @@ class QuizFixture extends AbstractFixture
 
     public function load(array $options): void
     {
-        foreach ($options['quizes'] as $quizData) {
+        foreach ($options['quizzes'] as $quizData) {
             /** @var Quiz $quiz */
             $quiz = $this->factory->createNew();
 
-            $quiz->setFinished($quizData['finished']);
             $quiz->setValidFrom(new \DateTime($quizData['validFrom']));
             $quiz->setValidTo(new \DateTime($quizData['validTo']));
             $quiz->setCode($quizData['code']);
@@ -57,6 +57,15 @@ class QuizFixture extends AbstractFixture
 
             $subject = $this->entityManager->getRepository(Subject::class)->findOneBy(['code' => $quizData['subject']]);
             $quiz->setSubject($subject);
+
+            foreach ($quizData['groups'] as $groupCode) {
+                $studentGroup = $this
+                    ->entityManager
+                    ->getRepository(StudentGroup::class)
+                    ->findOneBy(['code' => $groupCode]);
+
+                $quiz->addGroup($studentGroup);
+            }
 
             $this->entityManager->persist($quiz);
         }
@@ -73,17 +82,19 @@ class QuizFixture extends AbstractFixture
     {
         $optionsNode
             ->children()
-                ->arrayNode('quizes')
+                ->arrayNode('quizzes')
                 ->isRequired()
                 ->requiresAtLeastOneElement()
                 ->arrayPrototype()
                     ->children()
                         ->scalarNode('validFrom')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('validTo')->isRequired()->cannotBeEmpty()->end()
-                        ->booleanNode('finished')->defaultFalse()->end()
                         ->scalarNode('subject')->cannotBeEmpty()->end()
                         ->scalarNode('code')->cannotBeEmpty()->end()
                         ->scalarNode('owner')->cannotBeEmpty()->end()
-                        ->scalarNode('title')->cannotBeEmpty()->end();
+                        ->scalarNode('title')->cannotBeEmpty()->end()
+                        ->arrayNode('groups')
+                            ->scalarPrototype()
+                        ->end();
     }
 }

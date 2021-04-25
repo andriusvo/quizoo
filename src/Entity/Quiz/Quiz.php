@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Quiz;
 
+use App\Entity\Group\StudentGroup;
 use App\Entity\Subject\Subject;
 use App\Entity\User\User;
 use App\Model\TimestampableTrait;
@@ -109,7 +110,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
     private $subject;
 
     /**
-     * @var Question[]
+     * @var ArrayCollection|Question[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Question",  mappedBy="quiz", cascade={"persist"})
      *
@@ -119,15 +120,22 @@ class Quiz implements ResourceInterface, TimestampableInterface
     private $questions;
 
     /**
-     * @var bool
+     * @var ArrayCollection|StudentGroup[]
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Group\StudentGroup", cascade={"persist"})
+     * @ORM\JoinTable(name="app_quiz_student_group",
+     *      joinColumns={@ORM\JoinColumn(name="quiz_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="student_group_id", referencedColumnName="id")}
+     *      )
+     *
+     * @Assert\Count(min=1)
      */
-    private $manualEvaluation = false;
+    private $groups;
 
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -232,15 +240,31 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function isManualEvaluation(): bool
+    public function getGroups(): Collection
     {
-        return $this->manualEvaluation;
+        return $this->groups;
     }
 
-    public function setManualEvaluation(bool $manualEvaluation): Quiz
+    public function addGroup(StudentGroup $studentGroup): Quiz
     {
-        $this->manualEvaluation = $manualEvaluation;
+        if (false === $this->groups->contains($studentGroup)) {
+            $this->groups->add($studentGroup);
+        }
 
         return $this;
+    }
+
+    public function removeGroup(StudentGroup $studentGroup): Quiz
+    {
+        if ($this->groups->contains($studentGroup)) {
+            $this->groups->removeElement($studentGroup);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSubject() . ': ' . $this->getTitle();
     }
 }

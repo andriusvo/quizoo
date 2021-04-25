@@ -17,27 +17,23 @@
 
 declare(strict_types=1);
 
-namespace App\Validator\Constraints;
+namespace App\Twig;
 
-use Symfony\Component\Validator\Constraint;
+use App\Entity\User\User;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Twig\Extension\RuntimeExtensionInterface;
 
-/**
- * @Annotation
- * @Target({"CLASS", "ANNOTATION"})
- */
-class AnswersCount extends Constraint
+class UserRuntimeExtension implements RuntimeExtensionInterface
 {
-    public $message = 'app.question.error.answers_count';
+    private $userRepository;
 
-    /**{ @inheritdoc} */
-    public function getTargets()
+    public function __construct(RepositoryInterface $userRepository)
     {
-        return self::CLASS_CONSTRAINT;
+        $this->userRepository = $userRepository;
     }
 
-    /** {@inheritdoc} */
-    public function validatedBy(): string
+    public function getUserById(int $id): ?User
     {
-        return AnswersCountValidator::class;
+        return $this->userRepository->find($id);
     }
 }

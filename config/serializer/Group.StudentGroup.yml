@@ -1,0 +1,11 @@
+App\Entity\Group\StudentGroup:
+    exclusion_policy: ALL
+    xml_root_name: student_group
+    virtual_properties:
+        getId:
+            serialized_name: id
+            groups: [Default, Autocomplete]
+        getCode:
+            serialized_name: code
+            type: string
+            groups: [Default, Autocomplete]

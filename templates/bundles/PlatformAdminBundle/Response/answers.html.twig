@@ -1,0 +1,42 @@
+<div id="details">
+    <h4 class="ui top attached large header">{{ 'app.ui.answers'|trans }}</h4>
+    <div class="ui attached segment">
+        <div>
+            <table class="ui very basic celled table">
+                <tbody>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.question_plural'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.correct_answer'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.your_answer'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.correct'|trans }}</strong></td>
+                </tr>
+                {% for answer in response.answers %}
+                    {% set question = answer.selectedAnswer.question %}
+                    <tr>
+                        <td>{{ question.title }}</td>
+                        <td>
+                            <div class="ui bulleted list">
+                                {% for correctAnswer in question.correctAnswers %}
+                                    <div class="item">{{ correctAnswer.value }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui bulleted list">
+                                {% for selectedAnswer in answer.selectedAnswers %}
+                                    <div class="item">{{ selectedAnswer.value }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>
+                            {% set color = answer.correct ? 'green' : 'red' %}
+                            {% set label = answer.correct ? 'app.ui.correct' : 'app.ui.incorrect' %}
+                            <div class="ui {{ color }} horizontal label">{{ label|trans }}</div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

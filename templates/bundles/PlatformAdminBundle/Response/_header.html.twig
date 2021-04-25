@@ -1,0 +1,12 @@
+<div id="header" class="ui stackable two column grid">
+    <div class="column">
+        <h1 class="ui header">
+            <i class="circular cube icon"></i>
+            <div class="content">
+                <span>{{ response.quiz.title }}</span>
+                <div class="sub header">{{ 'app.ui.responses'|trans }}</div>
+            </div>
+        </h1>
+        {% include "@PlatformAdmin/Response/_breadcrumb.html.twig" %}
+    </div>
+</div>

@@ -64,7 +64,7 @@ sylius_fixtures:
                                 answers:
                                     -
                                         value: 4
-                                        correct: true
+                                        correct: false
                                     -
                                         value: 8
                                         correct: false
@@ -126,7 +126,6 @@ sylius_fixtures:
                                         correct: false
                             -
                                 title: PHP or C#?
-                                type: single_answer
                                 quiz: 'VU-20-12'
                                 answers:
                                     -

@@ -4,6 +4,10 @@ app:
         quizzes: Quizzes
         edit_quiz: Edit quiz
         new_quiz: New quiz
+        quiz: Quiz
+        score: Score
+        start_date: Start date
+        finish_date: Finish date
         manage_quizzes: Manage quizzes
         students: Students
         student_group: Student groups
@@ -21,7 +25,9 @@ app:
         supervisor: Supervisor
         students_count: Students count
         teachers: Teachers
+        show_responses: Show responses
         group: Group
+        groups: Groups
         quiz_details: Quiz details
         valid_from: Valid from
         valid_to: Valid to
@@ -29,11 +35,14 @@ app:
         correct: Correct
         incorrect: Incorrect
         question_plural: Question
+        response_details: Response details
+        correct_answer: Correct answer
+        your_answer: Your answer
+        responses: Responses
         question:
             type:
                 single_answer: Single answer
                 multiple_answer: Multiple answer
-                free_text_answer: Free text answer
 
 sylius:
     ui:

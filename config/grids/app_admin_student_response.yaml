@@ -1,0 +1,47 @@
+sylius_grid:
+    grids:
+        app_student_response:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%app.model.response.class%"
+                    repository:
+                        method: createStudentResponseGrid
+                        arguments:
+                            - $id
+            fields:
+                score:
+                    label: app.ui.score
+                    type: string
+                    sortable: ~
+                quiz:
+                    label: app.ui.quiz
+                    type: string
+                    sortable: ~
+                startDate:
+                    type: datetime
+                    label: app.ui.start_date
+                    sortable: ~
+                    options:
+                        format: Y-m-d H:i
+                finishDate:
+                    type: datetime
+                    label: app.ui.finish_date
+                    sortable: ~
+                    options:
+                        format: Y-m-d H:i
+            filters:
+                quiz:
+                    type: string
+                    label: app.ui.quiz
+                    options:
+                        fields: [quiz.title, quiz.code]
+                    form_options:
+                        type: contains
+            actions:
+                item:
+                    show:
+                        type: show
+                        options:
+                            link:
+                                route: app_admin_response_show

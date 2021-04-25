@@ -49,6 +49,15 @@ sylius_grid:
                             link:
                                 route: sylius_admin_admin_user_create
                 item:
+                    show:
+                        type: show
+                        label: app.ui.show_responses
+                        options:
+                            link:
+                                route: app_admin_student_response_index
+                                parameters:
+                                    id: resource.id
+
                     update:
                         type: update
                         options:
