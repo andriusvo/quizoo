@@ -21,6 +21,7 @@ namespace App\Form\Type\Quiz;
 
 use App\Form\EventSubscriber\Quiz\QuestionType;
 use App\Form\EventSubscriber\Quiz\QuizTypeSubscriber;
+use App\Form\Type\Group\StudentGroupAutocompleteChoiceType;
 use App\Form\Type\Subject\SubjectAutocompleteChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -48,6 +49,14 @@ class QuizType extends AbstractResourceType
         $builder
             ->addEventSubscriber($this->quizTypeSubscriber)
             ->add('title', TextType::class)
+            ->add(
+                'groups',
+                StudentGroupAutocompleteChoiceType::class,
+                [
+                    'multiple' => true,
+                    'required' => true,
+                ]
+            )
             ->add(
                 'subject',
                 SubjectAutocompleteChoiceType::class,

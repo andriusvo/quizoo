@@ -1,0 +1,13 @@
+{% import '@PlatformAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set user = app_get_user_by_id(app.request.get('id')) %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.administration'|trans, url: path('admin_platform_admin_dashboard_index') },
+    { label: 'app.ui.students'|trans, url: path('app_admin_student_index') },
+    { label: user, url: path('sylius_admin_admin_user_update', {'id': user.id}) },
+    { label: 'app.ui.responses'|trans },
+]
+%}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

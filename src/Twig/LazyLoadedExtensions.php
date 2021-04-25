@@ -17,9 +17,18 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Quiz;
+namespace App\Twig;
 
-class SubmittedQuiz
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class LazyLoadedExtensions extends AbstractExtension
 {
-
+    /** {@inheritdoc} */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('app_get_user_by_id', [UserRuntimeExtension::class, 'getUserById']),
+        ];
+    }
 }

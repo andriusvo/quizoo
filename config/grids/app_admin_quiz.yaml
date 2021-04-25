@@ -5,6 +5,8 @@ sylius_grid:
                 name: doctrine/orm
                 options:
                     class: "%app.model.quiz.class%"
+                    repository:
+                        method: createForGrid
             fields:
                 code:
                     type: string
@@ -18,12 +20,25 @@ sylius_grid:
                     label: sylius.ui.title
                     type: string
                     sortable: ~
+                groups:
+                    label: app.ui.groups
+                    type: twig
+                    path: .
+                    options:
+                        template: "@PlatformAdmin/Quiz/Grid/Field/_groups.html.twig"
             filters:
                 search:
                     type: string
                     label: sylius.ui.search
                     options:
                         fields: [code, title]
+                groups:
+                    type: string
+                    label: app.ui.group
+                    options:
+                        fields: [studentGroup.code]
+                    form_options:
+                        type: contains
             actions:
                 main:
                     create:

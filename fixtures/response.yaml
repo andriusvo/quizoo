@@ -1,0 +1,37 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                app_response:
+                    options:
+                        responses:
+                            -
+                                score: 100
+                                startDate: '2021-04-30 15:00'
+                                finishDate: '2021-04-30 15:30'
+                                quiz: 'VU-15-18'
+                                student: 'student-1'
+                                answers:
+                                    -
+                                        selectedAnswer: '4'
+                                        correct: false
+                            -
+                                score: 95
+                                startDate: '2021-04-30 15:00'
+                                finishDate: '2021-04-30 15:30'
+                                quiz: 'VU-18-19'
+                                student: 'student-2'
+                                answers:
+                                    -
+                                        selectedAnswer: 'false'
+                                        correct: false
+                            -
+                                score: 20
+                                startDate: '2021-04-30 18:00'
+                                finishDate: '2021-04-30 18:30'
+                                quiz: 'VU-20-12'
+                                student: 'student-3'
+                                answers:
+                                    -
+                                        selectedAnswer: 'Yes'
+                                        correct: false

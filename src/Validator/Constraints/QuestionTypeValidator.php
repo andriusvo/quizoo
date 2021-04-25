@@ -45,9 +45,6 @@ class QuestionTypeValidator extends ConstraintValidator
             case QuestionTypes::MULTIPLE_ANSWER:
                 $this->validateMultipleAnswer($value, $constraint);
                 break;
-            case QuestionTypes::FREE_TEXT_ANSWER:
-                $this->validateFreeText($value, $constraint);
-                break;
             default:
                 throw new BadRequestHttpException();
         }
@@ -63,13 +60,6 @@ class QuestionTypeValidator extends ConstraintValidator
     private function validateMultipleAnswer(Question $question, Constraint $constraint): void
     {
         if ($question->countCorrectAnswers() <= 1) {
-            $this->context->addViolation($constraint->message);
-        }
-    }
-
-    private function validateFreeText(Question $question, Constraint $constraint): void
-    {
-        if ($question->countCorrectAnswers() !== 0) {
             $this->context->addViolation($constraint->message);
         }
     }

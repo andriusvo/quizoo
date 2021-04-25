@@ -24,6 +24,14 @@ sylius_rbac:
                 - app.subject.show
                 - app.subject.create
                 - app.subject.update
+                - app.student_group.index
+                - app.student_group.show
+                - app.student_group.create
+                - app.student_group.update
+                - app.response.index
+                - app.response.show
+                - app.response.create
+                - app.response.update
             security_roles: [ROLE_ADMIN]
         ROLE_TEACHER:
             name: Teacher
@@ -38,6 +46,14 @@ sylius_rbac:
                 - app.subject.show
                 - app.subject.create
                 - app.subject.update
+                - app.student_group.index
+                - app.student_group.show
+                - app.student_group.create
+                - app.student_group.update
+                - app.response.index
+                - app.response.show
+                - app.response.create
+                - app.response.update
         ROLE_STUDENT:
             name: Student
             description: Student role

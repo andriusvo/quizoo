@@ -20,7 +20,6 @@ declare(strict_types=1);
 namespace App\Entity\Quiz;
 
 use App\Constants\QuestionTypes;
-use App\Validator\Constraints\AnswersCount;
 use App\Validator\Constraints\QuestionType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,7 +32,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="app_question")
  *
  * @QuestionType()
- * @AnswersCount()
  */
 class Question implements ResourceInterface
 {
@@ -78,6 +76,7 @@ class Question implements ResourceInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Answer",  mappedBy="question", cascade={"persist"})
      *
      * @Assert\Valid()
+     * @Assert\Count(min=1)
      */
     private $answers;
 
@@ -163,5 +162,14 @@ class Question implements ResourceInterface
         }
 
         return $count;
+    }
+
+    public function getCorrectAnswers(): Collection
+    {
+        return $this->answers->filter(
+            function (Answer $answer): bool {
+                return $answer->isCorrect();
+            }
+        );
     }
 }

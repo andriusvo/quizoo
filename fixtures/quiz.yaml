@@ -5,7 +5,7 @@ sylius_fixtures:
                 app_quiz:
                     priority: 20
                     options:
-                        quizes:
+                        quizzes:
                             -
                                 title: Maths quiz on sums
                                 subject: 'object-oriented-programming'
@@ -13,6 +13,7 @@ sylius_fixtures:
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-15-18'
                                 owner: 'teacher-1'
+                                groups: ['PS-4K-4']
                             -
                                 title: English quiz on verbs
                                 subject: 'functional-programming'
@@ -20,6 +21,7 @@ sylius_fixtures:
                                 validTo: '2021-04-30 15:30'
                                 code: 'VU-18-19'
                                 owner: 'teacher-2'
+                                groups: ['PS-2-4']
                             -
                                 title: Object oriented quiz on polymorphisms
                                 subject: 'communication'
@@ -27,3 +29,4 @@ sylius_fixtures:
                                 validTo: '2021-04-30 18:30'
                                 code: 'VU-20-12'
                                 owner: 'teacher-3'
+                                groups: ['PS-8-4', 'PS-2-4']

@@ -17,9 +17,21 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Quiz;
+namespace App\Repository\Quiz;
 
-class SubmittedQuestion
+use Doctrine\ORM\QueryBuilder;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+
+class QuizRepository extends EntityRepository
 {
+    public function createForGrid(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('quiz');
 
+        $qb
+            ->select('quiz', 'studentGroup')
+            ->leftJoin('quiz.groups', 'studentGroup');
+
+        return $qb;
+    }
 }
