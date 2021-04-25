@@ -1,0 +1,33 @@
+<div id="details">
+    <h4 class="ui top attached large header">{{ 'app.ui.quiz_details'|trans }}</h4>
+    <div class="ui attached segment">
+        <div>
+            <table class="ui very basic celled table">
+                <tbody>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'sylius.ui.enabled'|trans }}</strong></td>
+                    <td>
+                        {% if quiz.enabled %}
+                            <span class="ui teal label"><i class="checkmark icon"></i>{{ 'sylius.ui.enabled'|trans }}</span>
+                        {% else %}
+                            <span class="ui red label"><i class="remove icon"></i>{{ 'sylius.ui.disabled'|trans }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'sylius.ui.code'|trans }}</strong></td>
+                    <td>{{ quiz.code }}</td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.valid_from'|trans }}</strong></td>
+                    <td>{{ quiz.validFrom|date('Y-m-d H:i') }}</td>
+                </tr>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.valid_to'|trans }}</strong></td>
+                    <td>{{ quiz.validTo|date('Y-m-d H:i') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -17,9 +17,23 @@ app:
         manage_subjects: Manage subjects
         new_subject: New subject
         edit_subject: Edit subject
+        answers: Answers
         supervisor: Supervisor
         students_count: Students count
         teachers: Teachers
+        group: Group
+        quiz_details: Quiz details
+        valid_from: Valid from
+        valid_to: Valid to
+        questions: Questions
+        correct: Correct
+        incorrect: Incorrect
+        question_plural: Question
+        question:
+            type:
+                single_answer: Single answer
+                multiple_answer: Multiple answer
+                free_text_answer: Free text answer
 
 sylius:
     ui:

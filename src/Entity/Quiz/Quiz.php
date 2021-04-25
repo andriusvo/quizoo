@@ -22,13 +22,14 @@ namespace App\Entity\Quiz;
 use App\Entity\Subject\Subject;
 use App\Entity\User\User;
 use App\Model\TimestampableTrait;
+use App\Model\ToggleableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Sylius\Component\Resource\Model\ToggleableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -54,6 +55,9 @@ class Quiz implements ResourceInterface, TimestampableInterface
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual("now")
      */
     private $validFrom;
 
@@ -61,6 +65,9 @@ class Quiz implements ResourceInterface, TimestampableInterface
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual("now")
      */
     private $validTo;
 
@@ -76,6 +83,8 @@ class Quiz implements ResourceInterface, TimestampableInterface
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     *
+     * @Assert\NotBlank()
      */
     private $owner;
 
@@ -83,6 +92,9 @@ class Quiz implements ResourceInterface, TimestampableInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
      */
     private $title;
 
@@ -91,22 +103,27 @@ class Quiz implements ResourceInterface, TimestampableInterface
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject\Subject")
      * @ORM\JoinColumn(name="subject_id", referencedColumnName="id", nullable=false)
+     *
+     * @Assert\NotBlank()
      */
     private $subject;
+
+    /**
+     * @var Question[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Question",  mappedBy="quiz", cascade={"persist"})
+     *
+     * @Assert\Count(min=1)
+     * @Assert\Valid()
+     */
+    private $questions;
 
     /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
      */
-    private $finished = false;
-
-    /**
-     * @var Question[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Question",  mappedBy="quiz", cascade={"persist"})
-     */
-    private $questions;
+    private $manualEvaluation = false;
 
     public function __construct()
     {
@@ -190,18 +207,6 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
-    public function isFinished(): bool
-    {
-        return $this->finished;
-    }
-
-    public function setFinished(bool $finished): Quiz
-    {
-        $this->finished = $finished;
-
-        return $this;
-    }
-
     public function getQuestions(): Collection
     {
         return $this->questions;
@@ -223,6 +228,18 @@ class Quiz implements ResourceInterface, TimestampableInterface
             $this->questions->removeElement($question);
             $question->setQuiz(null);
         }
+
+        return $this;
+    }
+
+    public function isManualEvaluation(): bool
+    {
+        return $this->manualEvaluation;
+    }
+
+    public function setManualEvaluation(bool $manualEvaluation): Quiz
+    {
+        $this->manualEvaluation = $manualEvaluation;
 
         return $this;
     }

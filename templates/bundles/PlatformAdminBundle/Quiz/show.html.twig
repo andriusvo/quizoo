@@ -1,0 +1,7 @@
+{% extends '@PlatformAdmin/layout.html.twig' %}
+
+{% block title %}{{ 'app.ui.manage_quizzes'|trans }} | {{ quiz.title }}{% endblock %}
+
+{% block content %}
+        {% include "@PlatformAdmin/Quiz/_content.html.twig" %}
+{% endblock %}

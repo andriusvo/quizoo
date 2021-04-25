@@ -1,0 +1,18 @@
+{% block app_answer_widget %}
+    <div class="two fields">
+        <div class="five wide field">
+            {{ form_row(form.value) }}
+        </div>
+        <span class="correct-value">{{ form_row(form.correct) }}</span>
+    </div>
+{% endblock %}
+
+{% block app_question_widget %}
+    <div class="ui segment">
+        {{ form_row(form.title) }}
+        {{ form_row(form.type) }}
+        <div class="ui segment">
+            {{ form_row(form.answers) }}
+        </div>
+    </div>
+{% endblock %}

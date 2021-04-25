@@ -22,10 +22,10 @@ final class Version20210424113048 extends AbstractMigration
         );
 
         $this->addSql(
-            'CREATE TABLE app_subject (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, code VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_1693BE3777153098 (code), INDEX IDX_1693BE37A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB'
+            'CREATE TABLE app_subject (id INT AUTO_INCREMENT NOT NULL, supervisor_id INT NOT NULL, code VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_1693BE3777153098 (code), INDEX IDX_1693BE37A76ED395 (supervisor_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB'
         );
         $this->addSql(
-            'ALTER TABLE app_subject ADD CONSTRAINT FK_1693BE37A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id)'
+            'ALTER TABLE app_subject ADD CONSTRAINT FK_1693BE37A76ED395 FOREIGN KEY (supervisor_id) REFERENCES app_user (id)'
         );
         $this->addSql('ALTER TABLE app_quiz ADD subject_id INT NOT NULL, DROP subject');
         $this->addSql(

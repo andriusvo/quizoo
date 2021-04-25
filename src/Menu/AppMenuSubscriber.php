@@ -19,12 +19,23 @@ declare(strict_types=1);
 
 namespace App\Menu;
 
+use App\Constants\AuthorizationRoles;
+use App\Entity\User\User;
+use App\Provider\UserProvider;
 use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AppMenuSubscriber implements EventSubscriberInterface
 {
+    /** @var UserProvider */
+    private $userProvider;
+
+    public function __construct(UserProvider $userProvider)
+    {
+        $this->userProvider = $userProvider;
+    }
+
     /** {@inheritdoc} */
     public static function getSubscribedEvents(): array
     {
@@ -38,8 +49,8 @@ class AppMenuSubscriber implements EventSubscriberInterface
         $menu = $event->getMenu();
 
         $this->configureQuizMenu($menu);
-        $this->configureConfigurationMenu($menu);
         $this->configureStudentsMenu($menu);
+        $this->configureConfigurationMenu($menu);
     }
 
     private function configureQuizMenu(ItemInterface $menuItem): void
@@ -56,6 +67,15 @@ class AppMenuSubscriber implements EventSubscriberInterface
 
     private function configureConfigurationMenu(ItemInterface $menuItem): void
     {
+        /** @var User $user */
+        $user = $this->userProvider->getUser();
+
+        if (false === $user->hasRole(AuthorizationRoles::ROLE_SUPERADMIN)) {
+            $menuItem->removeChild('configuration');
+
+            return;
+        }
+
         $configurationMenu = $menuItem->getChild('configuration');
 
         if (null === $configurationMenu) {
