@@ -1,2 +1,3 @@
 platform_admin:
+    prefix: /admin
     resource: "@PlatformAdminBundle/Resources/config/routing.xml"
