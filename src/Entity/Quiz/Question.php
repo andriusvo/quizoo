@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace App\Entity\Quiz;
 
+use App\Constants\QuestionTypes;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -44,7 +45,7 @@ class Question implements ResourceInterface
      *
      * @ORM\Column(type="string", length=50)
      */
-    private $type;
+    private $type = QuestionTypes::SINGLE_ANSWER;
 
     /**
      * @var string
@@ -78,7 +79,7 @@ class Question implements ResourceInterface
         return $this->id;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -90,7 +91,7 @@ class Question implements ResourceInterface
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }

@@ -3,5 +3,7 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes:
+        - '@PlatformAdmin/Form/Widget/subject_autocomplete_widget.html.twig'
         - '@PlatformAdmin/Form/Widget/user_autocomplete_widget.html.twig'
         - '@PlatformAdmin/Form/Widget/student_autocomplete_widget.html.twig'
+        - '@PlatformAdmin/Form/Widget/answer_widget.html.twig'

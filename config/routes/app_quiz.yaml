@@ -2,7 +2,7 @@ app_quiz:
     resource: |
         alias: app.quiz
         templates: PlatformAdminBundle:Crud
-        except: ['bulkDelete', 'delete']
+        except: ['show', 'bulkDelete', 'delete']
         redirect: index
         grid: app_quiz
         vars:
@@ -11,3 +11,13 @@ app_quiz:
             index:
                 icon: globe
     type: sylius.resource
+
+app_quiz_show:
+    path: /quizzes/{id}
+    methods: [GET]
+    defaults:
+        _controller: app.controller.quiz:showAction
+        _sylius:
+            section: admin
+            permission: true
+            template: "@PlatformAdmin/Quiz/show.html.twig"

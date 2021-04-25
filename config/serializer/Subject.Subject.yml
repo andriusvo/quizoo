@@ -1,0 +1,11 @@
+App\Entity\Subject\Subject:
+    exclusion_policy: ALL
+    xml_root_name: subject
+    virtual_properties:
+        getId:
+            serialized_name: id
+            groups: [Default, Autocomplete]
+        getTitle:
+            serialized_name: title
+            type: string
+            groups: [Default, Autocomplete]

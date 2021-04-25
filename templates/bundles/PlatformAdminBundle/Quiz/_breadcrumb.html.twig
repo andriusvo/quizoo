@@ -1,0 +1,9 @@
+{% import '@PlatformAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.administration'|trans, url: path('admin_platform_admin_dashboard_index') },
+    { label: 'app.ui.quizzes'|trans, url: path('app_quiz_index') },
+    { label: resource.name|default(resource.code|default(resource.id)) }
+] %}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

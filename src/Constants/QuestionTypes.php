@@ -26,8 +26,8 @@ class QuestionTypes
     public const FREE_TEXT_ANSWER = 'free_text_answer';
 
     public const ALL = [
-        'app.question.type.single' => self::SINGLE_ANSWER,
-        'app.question.type.multiple' => self::MULTIPLE_ANSWER,
-        'app.question.type.free_text' => self::FREE_TEXT_ANSWER,
+        'app.ui.question.type.single_answer' => self::SINGLE_ANSWER,
+        'app.ui.question.type.multiple_answer' => self::MULTIPLE_ANSWER,
+        'app.ui.question.type.free_text_answer' => self::FREE_TEXT_ANSWER,
     ];
 }

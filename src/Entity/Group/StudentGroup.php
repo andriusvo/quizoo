@@ -107,4 +107,9 @@ class StudentGroup implements ResourceInterface, CodeAwareInterface
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->getCode();
+    }
 }

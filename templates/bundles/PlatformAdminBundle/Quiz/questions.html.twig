@@ -1,0 +1,35 @@
+<div id="details">
+    <h4 class="ui top attached large header">{{ 'app.ui.questions'|trans }}</h4>
+    <div class="ui attached segment">
+        <div>
+            <table class="ui very basic celled table">
+                <tbody>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'sylius.ui.title'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'sylius.ui.type'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.answers'|trans }}</strong></td>
+                </tr>
+                {% for question in quiz.questions %}
+                    <tr>
+                        <td>{{ question.title }}</td>
+                        {% set questionType = 'app.ui.question.type.' ~ question.type %}
+                        <td>{{ questionType|trans }}</td>
+                        <td>
+                            <div class="ui divided selection list">
+                                {% for answer in question.answers %}
+                                    {% set color = answer.correct ? 'green' : 'red' %}
+                                    {% set label = answer.correct ? 'app.ui.correct' : 'app.ui.incorrect' %}
+                                    <a class="item">
+                                        <div class="ui {{ color }} horizontal label">{{ label|trans }}</div>
+                                        {{ answer.value }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

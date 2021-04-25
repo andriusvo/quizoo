@@ -20,12 +20,24 @@ sylius_rbac:
                 - app.quiz.show
                 - app.quiz.create
                 - app.quiz.update
+                - app.subject.index
+                - app.subject.show
+                - app.subject.create
+                - app.subject.update
             security_roles: [ROLE_ADMIN]
         ROLE_TEACHER:
             name: Teacher
             description: Teacher role
             security_roles: [ROLE_TEACHER]
             permissions:
+                - app.quiz.index
+                - app.quiz.show
+                - app.quiz.create
+                - app.quiz.update
+                - app.subject.index
+                - app.subject.show
+                - app.subject.create
+                - app.subject.update
         ROLE_STUDENT:
             name: Student
             description: Student role

@@ -56,9 +56,32 @@ services:
         tags:
             - { name: form.type }
 
+    App\Form\Type\Quiz\QuizType:
+        arguments:
+            - '@App\Form\EventSubscriber\Quiz\QuizTypeSubscriber'
+            - '%app.model.quiz.class%'
+        tags:
+            - { name: form.type }
+
+    App\Form\EventSubscriber\Quiz\QuestionType:
+        arguments:
+            - '%app.model.question.class%'
+        tags:
+            - { name: form.type }
+
+    App\Form\EventSubscriber\Quiz\AnswerType:
+        arguments:
+            - '%app.model.answer.class%'
+        tags:
+            - { name: form.type }
+
     # Form types
     App\Form\Type\User\StudentType:
         arguments:
             - '@sylius.repository.admin_user'
         tags:
             - { name: form.type }
+
+    # Providers
+    App\Provider\UserProvider:
+        public: true

@@ -3,12 +3,15 @@ sylius_resource:
         app.quiz:
             classes:
                 model: App\Entity\Quiz\Quiz
+                form: App\Form\Type\Quiz\QuizType
         app.question:
             classes:
                 model: App\Entity\Quiz\Question
+                form: App\Form\EventSubscriber\Quiz\QuestionType
         app.answer:
             classes:
                 model: App\Entity\Quiz\Answer
+                form: App\Form\EventSubscriber\Quiz\AnswerType
         app.student_group:
             classes:
                 model: App\Entity\Group\StudentGroup

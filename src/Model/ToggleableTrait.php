@@ -21,7 +21,7 @@ namespace App\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
-class ToggleableTrait
+trait ToggleableTrait
 {
     /**
      * @var bool

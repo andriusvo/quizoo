@@ -50,7 +50,7 @@ class Subject implements ResourceInterface, CodeAwareInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="supervisor_id", referencedColumnName="id", nullable=false)
      *
      * @Assert\NotBlank()
      */

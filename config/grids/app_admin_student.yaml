@@ -9,8 +9,6 @@ sylius_grid:
                         method: createQueryBuilderByRoles
                         arguments:
                             - [!php/const App\Constants\AuthorizationRoles::ROLE_STUDENT]
-            sorting:
-                createdAt: desc
             fields:
                 firstName:
                     type: string
@@ -20,20 +18,14 @@ sylius_grid:
                     type: string
                     label: sylius.ui.last_name
                     sortable: ~
-                username:
+                group:
                     type: string
-                    label: sylius.ui.username
+                    label: app.ui.group
                     sortable: ~
                 email:
                     type: string
                     label: sylius.ui.email
                     sortable: ~
-                createdAt:
-                    type: datetime
-                    label: sylius.ui.registration_date
-                    sortable: ~
-                    options:
-                        format: d-m-Y H:i
                 enabled:
                     type: twig
                     label: sylius.ui.enabled
@@ -45,7 +37,7 @@ sylius_grid:
                     type: string
                     label: sylius.ui.search
                     options:
-                        fields: [email, username, firstName, lastName]
+                        fields: [email, firstName, lastName]
                 enabled:
                     type: boolean
                     label: sylius.ui.enabled
