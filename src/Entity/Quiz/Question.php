@@ -20,14 +20,20 @@ declare(strict_types=1);
 namespace App\Entity\Quiz;
 
 use App\Constants\QuestionTypes;
+use App\Validator\Constraints\AnswersCount;
+use App\Validator\Constraints\QuestionType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="app_question")
+ *
+ * @QuestionType()
+ * @AnswersCount()
  */
 class Question implements ResourceInterface
 {
@@ -44,6 +50,8 @@ class Question implements ResourceInterface
      * @var string
      *
      * @ORM\Column(type="string", length=50)
+     *
+     * @Assert\NotBlank()
      */
     private $type = QuestionTypes::SINGLE_ANSWER;
 
@@ -51,6 +59,8 @@ class Question implements ResourceInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -66,6 +76,8 @@ class Question implements ResourceInterface
      * @var Answer[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Quiz\Answer",  mappedBy="question", cascade={"persist"})
+     *
+     * @Assert\Valid()
      */
     private $answers;
 
@@ -108,7 +120,7 @@ class Question implements ResourceInterface
         return $this->quiz;
     }
 
-    public function setQuiz(Quiz $quiz): Question
+    public function setQuiz(?Quiz $quiz): Question
     {
         $this->quiz = $quiz;
 
@@ -138,5 +150,18 @@ class Question implements ResourceInterface
         }
 
         return $this;
+    }
+
+    public function countCorrectAnswers(): int
+    {
+        $count = 0;
+
+        foreach ($this->answers as $answer) {
+            if ($answer->isCorrect()) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 }

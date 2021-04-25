@@ -21,6 +21,7 @@ namespace App\Entity\Quiz;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -41,6 +42,8 @@ class Answer implements ResourceInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $value;
 
@@ -81,7 +84,7 @@ class Answer implements ResourceInterface
         return $this->question;
     }
 
-    public function setQuestion(Question $question): Answer
+    public function setQuestion(?Question $question): Answer
     {
         $this->question = $question;
 
