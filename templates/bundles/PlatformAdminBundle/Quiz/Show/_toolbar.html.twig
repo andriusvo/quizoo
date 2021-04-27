@@ -1,0 +1,5 @@
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+<div class="ui right floated buttons">
+    {{ buttons.default(path('app_quiz_results', {'id': resource.id}), 'app.ui.generate_results', null, 'file', 'primary') }}
+</div>

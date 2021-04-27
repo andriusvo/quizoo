@@ -1,0 +1,12 @@
+{% extends '@PlatformAdmin/layout.html.twig' %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.new_'~metadata.name) %}
+
+{% block title %}{{ parent() }} {{ header|trans }}{% endblock %}
+
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+{% block content %}
+    {% include '@PlatformAdmin/Quiz/Results/_header.html.twig' %}
+    {% include '@PlatformAdmin/Quiz/Results/_content.html.twig' %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        {{ form_start(form, {'action': path('app_quiz_results', {'id': quiz.id}), 'attr': {'class': 'ui loadable form', 'autocomplete': 'off', 'novalidate': 'novalidate'}}) }}
+        <div class="ui left aligned segment">
+            {{ form_row(form.studentGroup) }}
+            {{ form_row(form.student) }}
+            <button class="ui labeled icon primary button" type="submit"><i class="plus icon"></i>{{- 'sylius.ui.generate'|trans -}}</button>
+        </div>
+
+        {{ form_row(form._token) }}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+</div>

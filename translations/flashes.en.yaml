@@ -1,0 +1,3 @@
+sylius:
+    resource:
+        results_form_error: Group or student should be chosen!
