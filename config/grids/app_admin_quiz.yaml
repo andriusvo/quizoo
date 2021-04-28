@@ -7,6 +7,8 @@ sylius_grid:
                     class: "%app.model.quiz.class%"
                     repository:
                         method: createForGrid
+                        arguments:
+                            - expr:service('App\\Provider\\UserProvider').getUser()
             fields:
                 code:
                     type: string

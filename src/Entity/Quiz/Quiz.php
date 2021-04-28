@@ -83,7 +83,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", nullable=false)
      *
      * @Assert\NotBlank()
      */

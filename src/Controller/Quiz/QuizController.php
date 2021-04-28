@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Quiz;
 
+use App\Constants\QuizResourceEvents;
 use App\Entity\Quiz\Quiz;
 use App\Form\Type\Quiz\ResultsType;
 use App\Generator\CsvContentGenerator;
@@ -27,6 +28,7 @@ use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Component\Resource\ResourceActions;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuizController extends ResourceController
 {
@@ -45,18 +47,25 @@ class QuizController extends ResourceController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && false === $form->isValid()) {
-            $this->flashHelper->addErrorFlash($configuration, 'results_form_error');
+            $this->flashHelper->addErrorFlash($configuration, QuizResourceEvents::FORM_ERROR);
 
             return $this->redirectHandler->redirectToReferer($configuration);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $content = $this->csvContentGenerator->generate($resource, $form->getData());
+            try {
+                $content = $this->csvContentGenerator->generate($resource, $form->getData());
+            } catch (NotFoundHttpException $exception) {
+                $this->flashHelper->addErrorFlash($configuration, QuizResourceEvents::NOT_FOUND);
+
+                return $this->redirectHandler->redirectToReferer($configuration);
+            }
+
             $response = new Response($content);
             $response->headers->set('Content-Type', 'text/csv');
             $response->headers->set(
                 'Content-Disposition',
-                'attachment; filename="orders_export_' . date('Ymd_His') . '.csv"'
+                'attachment; filename="quiz_results_' . date('Ymd') . '.csv"'
             );
 
             return $response;
