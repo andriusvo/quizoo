@@ -21,12 +21,9 @@ security:
                 login_path: admin_platform_admin_login
                 check_path: admin_platform_admin_login_check
                 failure_path: admin_platform_admin_login
-                default_target_path: admin_platform_admin_dashboard_index
+                default_target_path: platform_after_login
                 use_forward: false
                 use_referer: true
-            #                csrf_token_generator: security.csrf.token_manager
-            #                csrf_parameter: _csrf_admin_security_token
-            #                csrf_token_id: admin_authenticate
             remember_me:
                 secret: "%env(APP_SECRET)%"
                 name: APP_ADMIN_REMEMBER_ME
@@ -37,8 +34,7 @@ security:
                 target: admin_platform_admin_login
             anonymous: true
 
-
     access_control:
-        - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/admin/.*", roles: [ROLE_ADMIN, ROLE_TEACHER] }
