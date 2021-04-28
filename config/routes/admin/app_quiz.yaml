@@ -21,3 +21,23 @@ app_quiz_show:
             section: admin
             permission: true
             template: "@PlatformAdmin/Quiz/show.html.twig"
+            vars:
+                templates:
+                    toolbar: "@PlatformAdmin/Quiz/Show/_toolbar.html.twig"
+
+app_quiz_results:
+    path: /quizzes/{id}/results
+    methods: [GET, POST]
+    defaults:
+        _controller: app.controller.quiz:generateResultsAction
+        _sylius:
+            section: admin
+            permission: true
+            redirect: referer
+            template: "@PlatformAdmin/Quiz/Results/generate.html.twig"
+            vars:
+                header: app.ui.results
+                subheader: app.ui.generate_results
+                icon: file
+                templates:
+                    breadcrumb: "@PlatformAdmin/Quiz/Results/_breadcrumb.html.twig"

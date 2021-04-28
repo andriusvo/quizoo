@@ -25,9 +25,9 @@ use Symfony\Component\Validator\Constraint;
  * @Annotation
  * @Target({"CLASS", "ANNOTATION"})
  */
-class QuestionType extends Constraint
+class ResultsGeneration extends Constraint
 {
-    public $message = 'app.question.error.invalid_type';
+    public $message = 'app.results.error.invalid_target';
 
     /**{ @inheritdoc} */
     public function getTargets()

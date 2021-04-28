@@ -34,6 +34,8 @@ app:
         questions: Questions
         correct: Correct
         incorrect: Incorrect
+        results: Results
+        generate_results: Generate results
         question_plural: Question
         response_details: Response details
         correct_answer: Correct answer

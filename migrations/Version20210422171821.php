@@ -28,7 +28,7 @@ final class Version20210422171821 extends AbstractMigration
             'CREATE TABLE app_question (id INT AUTO_INCREMENT NOT NULL, quiz_id INT NOT NULL, type VARCHAR(50) NOT NULL, title VARCHAR(255) NOT NULL, INDEX IDX_BE7729E3853CD175 (quiz_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB'
         );
         $this->addSql(
-            'CREATE TABLE app_quiz (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, valid_from DATETIME NOT NULL, valid_to DATETIME NOT NULL, code VARCHAR(30) NOT NULL, title VARCHAR(255) NOT NULL, subject VARCHAR(255) NOT NULL, finished TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_A13CDF3277153098 (code), INDEX IDX_A13CDF32A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB'
+            'CREATE TABLE app_quiz (id INT AUTO_INCREMENT NOT NULL, owner_id INT NOT NULL, valid_from DATETIME NOT NULL, valid_to DATETIME NOT NULL, code VARCHAR(30) NOT NULL, title VARCHAR(255) NOT NULL, subject VARCHAR(255) NOT NULL, finished TINYINT(1) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_A13CDF3277153098 (code), INDEX IDX_A13CDF32A76ED395 (owner_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB'
         );
         $this->addSql(
             'ALTER TABLE app_answer ADD CONSTRAINT FK_3FDE27A51E27F6BF FOREIGN KEY (question_id) REFERENCES app_question (id)'
@@ -37,7 +37,7 @@ final class Version20210422171821 extends AbstractMigration
             'ALTER TABLE app_question ADD CONSTRAINT FK_BE7729E3853CD175 FOREIGN KEY (quiz_id) REFERENCES app_quiz (id)'
         );
         $this->addSql(
-            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (user_id) REFERENCES platform_admin_user (id)'
+            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (owner_id) REFERENCES platform_admin_user (id)'
         );
     }
 

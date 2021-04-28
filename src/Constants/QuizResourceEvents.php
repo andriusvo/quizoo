@@ -17,21 +17,10 @@
 
 declare(strict_types=1);
 
-namespace App\Validator\Constraints;
+namespace App\Constants;
 
-use Symfony\Component\Validator\Constraint;
-
-/**
- * @Annotation
- * @Target({"CLASS", "ANNOTATION"})
- */
-class QuestionType extends Constraint
+class QuizResourceEvents
 {
-    public $message = 'app.question.error.invalid_type';
-
-    /**{ @inheritdoc} */
-    public function getTargets()
-    {
-        return self::CLASS_CONSTRAINT;
-    }
+    public const FORM_ERROR = 'results_form_error';
+    public const NOT_FOUND = 'results_not_found';
 }

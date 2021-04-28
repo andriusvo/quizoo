@@ -64,7 +64,7 @@ final class Version20210424102817 extends AbstractMigration
         );
         $this->addSql('DROP TABLE platform_admin_user');
         $this->addSql(
-            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id)'
+            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (owner_id) REFERENCES app_user (id)'
         );
         $this->addSql(
             'ALTER TABLE sylius_user_oauth ADD CONSTRAINT FK_C3471B78A76ED395 FOREIGN KEY (user_id) REFERENCES app_user (id)'
@@ -98,7 +98,7 @@ final class Version20210424102817 extends AbstractMigration
         $this->addSql('DROP TABLE sylius_role_permission');
         $this->addSql('ALTER TABLE app_quiz DROP FOREIGN KEY FK_A13CDF32A76ED395');
         $this->addSql(
-            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (user_id) REFERENCES platform_admin_user (id) ON UPDATE NO ACTION ON DELETE NO ACTION'
+            'ALTER TABLE app_quiz ADD CONSTRAINT FK_A13CDF32A76ED395 FOREIGN KEY (owner_id) REFERENCES platform_admin_user (id) ON UPDATE NO ACTION ON DELETE NO ACTION'
         );
         $this->addSql('ALTER TABLE sylius_user_oauth DROP FOREIGN KEY FK_C3471B78A76ED395');
         $this->addSql(

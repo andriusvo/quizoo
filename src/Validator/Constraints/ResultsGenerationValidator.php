@@ -19,19 +19,21 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
+use App\Model\ResultsDTO;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Webmozart\Assert\Assert;
 
-/**
- * @Annotation
- * @Target({"CLASS", "ANNOTATION"})
- */
-class QuestionType extends Constraint
+class ResultsGenerationValidator extends ConstraintValidator
 {
-    public $message = 'app.question.error.invalid_type';
-
-    /**{ @inheritdoc} */
-    public function getTargets()
+    /** {@inheritdoc} */
+    public function validate($value, Constraint $constraint): void
     {
-        return self::CLASS_CONSTRAINT;
+        /** @var ResultsDTO $value */
+        Assert::isInstanceOf($value, ResultsDTO::class);
+
+        if (null === $value->getStudentGroup() && null === $value->getStudent()) {
+            $this->context->addViolation($constraint->message);
+        }
     }
 }

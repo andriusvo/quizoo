@@ -27,13 +27,19 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class SubjectRepository extends EntityRepository
 {
-    public function createForGrid(): QueryBuilder
+    public function createForGrid(User $user): QueryBuilder
     {
         $qb = $this->createQueryBuilder('subject');
 
         $qb
             ->select('subject', 'supervisor')
             ->innerJoin('subject.supervisor', 'supervisor');
+
+        if (false === $user->hasRole(AuthorizationRoles::ROLE_ADMIN)) {
+            $qb
+                ->andWhere($qb->expr()->eq('subject.supervisor', ':supervisor'))
+                ->setParameter('supervisor', $user);
+        }
 
         return $qb;
     }

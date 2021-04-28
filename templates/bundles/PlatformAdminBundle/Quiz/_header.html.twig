@@ -1,12 +1,12 @@
-<div id="header" class="ui stackable two column grid">
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
+<div class="ui stackable two column grid">
     <div class="column">
-        <h1 class="ui header">
-            <i class="circular cube icon"></i>
-            <div class="content">
-                <span>{{ quiz.title }}</span>
-                <div class="sub header">{{ 'app.ui.quizzes'|trans }}</div>
-            </div>
-        </h1>
+        {{ headers.default(quiz.title, 'circular cube', 'app.ui.quizzes'|trans) }}
+
         {% include "@PlatformAdmin/Quiz/_breadcrumb.html.twig" %}
+    </div>
+    <div class="middle aligned column">
+        {% include "@PlatformAdmin/Quiz/Show/_toolbar.html.twig" %}
     </div>
 </div>
