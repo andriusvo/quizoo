@@ -12,6 +12,34 @@ app_quiz:
                 icon: globe
     type: sylius.resource
 
+app_admin_partial_quiz_latest:
+    path: /quizzes/latest
+    methods: [GET]
+    defaults:
+        _controller: app.controller.quiz:indexAction
+        _sylius:
+            repository:
+                method: findLatest
+                arguments:
+                    - "expr:service('App\\\\Provider\\\\UserProvider').getUser()"
+                    - '!!int $count'
+            template: $template
+            permission: true
+
+app_admin_partial_quiz_upcoming:
+    path: /quizzes/upcoming
+    methods: [GET]
+    defaults:
+        _controller: app.controller.quiz:indexAction
+        _sylius:
+            repository:
+                method: findUpcoming
+                arguments:
+                    - "expr:service('App\\\\Provider\\\\UserProvider').getUser()"
+                    - '!!int $count'
+            template: $template
+            permission: true
+
 app_quiz_show:
     path: /quizzes/{id}
     methods: [GET]

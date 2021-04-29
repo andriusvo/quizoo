@@ -1,0 +1,8 @@
+<div class="ui two column stackable grid">
+    <div class="column">
+        {{ render(url('app_admin_partial_quiz_upcoming', {'count': 5, 'template': '@PlatformAdmin/Dashboard/_upcoming.html.twig'})) }}
+    </div>
+    <div class="column">
+        {{ render(path('app_admin_partial_quiz_latest', {'count': 5, 'template': '@PlatformAdmin/Dashboard/_finished.html.twig'})) }}
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="ui grid">
+    <div class="center aligned doubling four column row">
+        <div class="column">
+            <a href="{{ path('app_admin_student_index') }}" class="ui basic big fluid button">
+                <i class="users icon"></i>
+                {{ 'app.ui.students'|trans }}
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{ path('app_admin_faq') }}" class="ui basic big fluid button">
+                <i class="hand point right icon"></i>
+                {{ 'app.ui.faq'|trans }}
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{ path('app_quiz_index') }}" class="ui basic big fluid button">
+                <i class="question icon"></i>
+                {{ 'app.ui.quizzes'|trans }}
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{ path('app_subject_index') }}" class="ui basic big fluid button">
+                <i class="book icon"></i>
+                {{ 'app.ui.subjects'|trans }}
+            </a>
+        </div>
+    </div>
+</div>

@@ -32,6 +32,7 @@ app:
         valid_from: Valid from
         valid_to: Valid to
         questions: Questions
+        faq: FAQ
         correct: Correct
         incorrect: Incorrect
         results: Results
@@ -39,6 +40,8 @@ app:
         question_plural: Question
         response_details: Response details
         correct_answer: Correct answer
+        upcoming_quizzes: Upcoming quizzes
+        latest_quizzes: Latest quizzes
         your_answer: Your answer
         responses: Responses
         question:
