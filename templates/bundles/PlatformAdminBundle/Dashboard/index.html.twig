@@ -1,0 +1,10 @@
+{% extends '@PlatformAdmin/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'sylius.ui.dashboard'|trans }}{% endblock %}
+
+{% block content %}
+    {% include '@PlatformAdmin/Dashboard/_header.html.twig' %}
+
+    {% include '@PlatformAdmin/Dashboard/_menu.html.twig' %}
+    {% include '@PlatformAdmin/Dashboard/_latest.html.twig' %}
+{% endblock %}
