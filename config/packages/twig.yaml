@@ -8,3 +8,5 @@ twig:
         - '@PlatformAdmin/Form/Widget/student_autocomplete_widget.html.twig'
         - '@PlatformAdmin/Form/Widget/student_group_autocomplete_widget.html.twig'
         - '@PlatformAdmin/Form/Widget/answer_widget.html.twig'
+    paths:
+        '%kernel.project_dir%/templates/bundles/PlatformFrontBundle': PlatformFront

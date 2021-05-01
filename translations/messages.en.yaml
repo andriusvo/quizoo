@@ -34,6 +34,10 @@ app:
         questions: Questions
         faq: FAQ
         correct: Correct
+        start: Start
+        start_quiz: Start quiz
+        enter_quiz_code: Enter quiz code
+        my_quizzes: My quizzes
         incorrect: Incorrect
         results: Results
         generate_results: Generate results

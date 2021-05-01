@@ -1,0 +1,19 @@
+{% extends '@PlatformFront/sidebar.html.twig' %}
+
+{% block title %}Quizoo | {% endblock %}
+
+{% block stylesheets %}
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'assets/admin/css/style.css'} %}
+{% endblock %}
+
+{% block topbar %}
+    {% include '@PlatformFront/_security.html.twig' %}
+{% endblock %}
+
+{% block footer %}
+    {{ 'sylius.ui.powered_by'|trans }} <a href="http://quizoo.com" target="_blank">Quizoo</a>.
+{% endblock %}
+
+{% block javascripts %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'assets/admin/js/app.js'} %}
+{% endblock %}

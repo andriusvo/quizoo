@@ -13,8 +13,8 @@ platform_admin_locale:
 platform_login:
     resource: "@PlatformAdminBundle/Resources/config/routing/security.yml"
 
-platform_after_login:
-    path: /after-login-success
+platform_target_path:
+    path: /target-path
     defaults:
         _controller: App\Controller\Platform\PlatformController::redirectAction
 

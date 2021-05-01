@@ -1,0 +1,6 @@
+app_front_dashboard:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+        template: "@PlatformFront/Dashboard/index.html.twig"
