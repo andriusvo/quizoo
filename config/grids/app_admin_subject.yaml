@@ -1,6 +1,6 @@
 sylius_grid:
     grids:
-        app_subject:
+        app_admin_subject:
             driver:
                 name: doctrine/orm
                 options:

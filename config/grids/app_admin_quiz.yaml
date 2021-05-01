@@ -1,6 +1,6 @@
 sylius_grid:
     grids:
-        app_quiz:
+        app_admin_quiz:
             driver:
                 name: doctrine/orm
                 options:

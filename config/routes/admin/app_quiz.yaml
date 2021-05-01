@@ -4,7 +4,7 @@ app_quiz:
         templates: PlatformAdminBundle:Crud
         except: ['show', 'bulkDelete', 'delete']
         redirect: index
-        grid: app_quiz
+        grid: app_admin_quiz
         vars:
             all:
                 subheader: app.ui.manage_quizzes

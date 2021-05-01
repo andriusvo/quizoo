@@ -29,6 +29,7 @@ class LazyLoadedExtensions extends AbstractExtension
     {
         return [
             new TwigFunction('app_get_user_by_id', [UserRuntimeExtension::class, 'getUserById']),
+            new TwigFunction('app_find_quizzes', [QuizRuntimeExtension::class, 'findUpcomingQuizzes']),
         ];
     }
 }

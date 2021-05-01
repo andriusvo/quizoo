@@ -37,7 +37,7 @@ app:
         start: Start
         start_quiz: Start quiz
         enter_quiz_code: Enter quiz code
-        my_quizzes: My quizzes
+        finished_quizzes: Finished quizzes
         incorrect: Incorrect
         results: Results
         generate_results: Generate results

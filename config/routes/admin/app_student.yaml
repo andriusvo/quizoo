@@ -5,7 +5,7 @@ app_admin_student_index:
         _controller: sylius.controller.admin_user:indexAction
         _sylius:
             template: "@PlatformAdmin/Crud/index.html.twig"
-            grid: app_student
+            grid: app_admin_student
             vars:
                 icon: cubes
                 header: app.ui.students

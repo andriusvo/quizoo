@@ -1,6 +1,6 @@
 sylius_grid:
     grids:
-        app_student:
+        app_admin_student:
             driver:
                 name: '%admin_platform.driver%'
                 options:
