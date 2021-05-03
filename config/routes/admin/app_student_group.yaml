@@ -4,7 +4,7 @@ app_student_group:
         templates: PlatformAdminBundle:Crud
         except: ['bulkDelete']
         redirect: index
-        grid: app_student_group
+        grid: app_admin_student_group
         vars:
             all:
                 subheader: app.ui.manage_student_group

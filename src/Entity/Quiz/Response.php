@@ -20,9 +20,11 @@ declare(strict_types=1);
 namespace App\Entity\Quiz;
 
 use App\Entity\User\User;
+use App\Model\Traits\PublicIdentityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +40,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Response implements ResourceInterface
 {
+    use PublicIdentityTrait;
+
     /**
      * @var int
      *
@@ -97,6 +101,7 @@ class Response implements ResourceInterface
 
     public function __construct()
     {
+        $this->uuid = Uuid::uuid4()->toString();
         $this->answers = new ArrayCollection();
     }
 

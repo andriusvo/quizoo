@@ -21,7 +21,7 @@ security:
                 login_path: admin_platform_admin_login
                 check_path: admin_platform_admin_login_check
                 failure_path: admin_platform_admin_login
-                default_target_path: platform_after_login
+                default_target_path: platform_target_path
                 use_forward: false
                 use_referer: true
             remember_me:
@@ -38,3 +38,4 @@ security:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/admin/.*", roles: [ROLE_ADMIN, ROLE_TEACHER] }
+        - { path: "^/.*", roles: [IS_AUTHENTICATED_FULLY] }

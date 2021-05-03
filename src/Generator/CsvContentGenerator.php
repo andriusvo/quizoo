@@ -23,7 +23,7 @@ use App\Entity\Group\StudentGroup;
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response;
 use App\Entity\User\User;
-use App\Model\ResultsDTO;
+use App\Model\DTO\ResultsDTO;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

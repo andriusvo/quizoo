@@ -15,7 +15,7 @@ app_admin_student_response_index:
         _controller: app.controller.response:indexAction
         _sylius:
             template: "@PlatformAdmin/Crud/index.html.twig"
-            grid: app_student_response
+            grid: app_admin_student_response
             vars:
                 route:
                     parameters:

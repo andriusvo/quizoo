@@ -1,0 +1,51 @@
+{% set quiz = response.quiz %}
+
+<div id="details">
+    <h4 class="ui top attached large header">{{ 'app.ui.questions'|trans }}</h4>
+    <div class="ui attached segment">
+        <div>
+            <table class="ui very basic celled table">
+                <tbody>
+                <tr>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.question_plural'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.your_answer'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.correct_answer'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.score'|trans }}</strong></td>
+                </tr>
+                {% for responseAnswer in response.answers %}
+                    {% set question = responseAnswer.selectedAnswer.question %}
+                    <tr>
+                        <td>{{ question.title }}</td>
+                        <td>
+                            <div class="ui middle aligned divided list">
+                                {% for selectedAnswer in responseAnswer.selectedAnswers %}
+                                    <div class="item">
+                                        <div class="content">
+                                            {{ selectedAnswer }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        <td>
+                            <div class="ui middle aligned divided list">
+                                {% for correctAnswer in question.correctAnswers %}
+                                    <div class="item">
+                                        <div class="content">
+                                            {{ correctAnswer }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui circular labels">
+                                <a class="ui label">{{ responseAnswer.score }}</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

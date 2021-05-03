@@ -21,7 +21,7 @@ namespace App\Form\Type\Quiz;
 
 use App\Form\Type\Group\StudentGroupAutocompleteChoiceType;
 use App\Form\Type\User\StudentAutocompleteChoiceType;
-use App\Model\ResultsDTO;
+use App\Model\DTO\ResultsDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

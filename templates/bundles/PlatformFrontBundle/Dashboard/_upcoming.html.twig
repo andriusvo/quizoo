@@ -1,0 +1,31 @@
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+
+{% set quizzes = app_upcoming_quizzes(app.user, 5) %}
+
+<div class="ui placeholder segment">
+    <div class="ui icon header">
+        <i class="play icon"></i>
+        {{ 'app.ui.upcoming_quizzes'|trans }}
+    </div>
+
+    {% if quizzes is empty %}
+        {{ messages.info('sylius.ui.no_results_to_display') }}
+    {% endif %}
+
+    <div class="ui relaxed divided list">
+        {% for quiz in quizzes %}
+            <div class="item">
+                <div class="right floated content">
+                    <div class="ui primary button">
+                        {{ 'app.ui.start'|trans }}
+                    </div>
+                </div>
+                <i class="large github middle aligned icon"></i>
+                <div class="content">
+                    <a class="header">{{ quiz.title }}</a>
+                    <div class="description">{{ quiz.validFrom|date('Y-m-d H:i') }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

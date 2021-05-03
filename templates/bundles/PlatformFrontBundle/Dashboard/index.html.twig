@@ -1,0 +1,10 @@
+{% extends '@PlatformFront/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'sylius.ui.dashboard'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="ui basic segment">
+        {% include '@PlatformFront/Dashboard/_upcoming.html.twig' %}
+        {% include '@PlatformFront/Dashboard/_my_quizzes.html.twig' %}
+    </div>
+{% endblock %}

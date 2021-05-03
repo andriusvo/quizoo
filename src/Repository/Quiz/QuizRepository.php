@@ -22,6 +22,7 @@ namespace App\Repository\Quiz;
 use App\Constants\AuthorizationRoles;
 use App\Entity\Quiz\Quiz;
 use App\Entity\User\User;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
@@ -58,9 +59,26 @@ class QuizRepository extends EntityRepository
         $qb = $this->createQueryBuilderWithUser($user);
 
         return $qb
-            ->addOrderBy('quiz.validTo', 'DESC')
             ->andWhere($qb->expr()->gt('quiz.validTo', ':now'))
             ->setParameter('now', new \DateTime('now'))
+            ->addOrderBy('quiz.validTo', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /** @return Quiz[] */
+    public function findUpcomingStudentQuiz(User $user, int $limit): array
+    {
+        $qb = $this->createQueryBuilder('quiz');
+
+        return $qb
+            ->leftJoin('quiz.groups', 'studentGroup')
+            ->where($qb->expr()->gt('quiz.validTo', ':now'))
+            ->andWhere($qb->expr()->eq('studentGroup', ':expectedGroup'))
+            ->setParameter('expectedGroup', $user->getGroup())
+            ->setParameter('now', new \DateTime('now'))
+            ->addOrderBy('quiz.validTo', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
