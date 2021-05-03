@@ -17,7 +17,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\DTO;
 
 use App\Entity\Group\StudentGroup;
 use App\Entity\User\User;

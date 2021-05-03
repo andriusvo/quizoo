@@ -14,7 +14,7 @@ sylius_fixtures:
                                 answers:
                                     -
                                         selectedAnswer: '4'
-                                        correct: false
+                                        score: 20
                             -
                                 score: 95
                                 startDate: '2021-04-30 15:00'
@@ -24,7 +24,7 @@ sylius_fixtures:
                                 answers:
                                     -
                                         selectedAnswer: 'false'
-                                        correct: false
+                                        score: 33
                             -
                                 score: 20
                                 startDate: '2021-04-30 18:00'
@@ -34,4 +34,4 @@ sylius_fixtures:
                                 answers:
                                     -
                                         selectedAnswer: 'Yes'
-                                        correct: false
+                                        score: 33

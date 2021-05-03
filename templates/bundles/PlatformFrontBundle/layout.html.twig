@@ -7,6 +7,10 @@
 {% endblock %}
 
 {% block topbar %}
+    <a class="icon item" title="{{ 'sylius.ui.home'|trans }}" href="{{ path('app_front_dashboard') }}">
+        <i class="home icon"></i>
+    </a>
+
     {% include '@PlatformFront/_security.html.twig' %}
 {% endblock %}
 

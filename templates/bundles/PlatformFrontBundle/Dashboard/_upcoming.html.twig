@@ -1,6 +1,6 @@
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
-{% set quizzes = app_find_quizzes(app.user, 5) %}
+{% set quizzes = app_upcoming_quizzes(app.user, 5) %}
 
 <div class="ui placeholder segment">
     <div class="ui icon header">
@@ -15,6 +15,11 @@
     <div class="ui relaxed divided list">
         {% for quiz in quizzes %}
             <div class="item">
+                <div class="right floated content">
+                    <div class="ui primary button">
+                        {{ 'app.ui.start'|trans }}
+                    </div>
+                </div>
                 <i class="large github middle aligned icon"></i>
                 <div class="content">
                     <a class="header">{{ quiz.title }}</a>

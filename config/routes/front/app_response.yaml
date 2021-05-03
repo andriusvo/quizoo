@@ -1,0 +1,13 @@
+app_response_show:
+    path: /responses/{uuid}
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:showAction
+        _sylius:
+            template: "@PlatformFront/Responses/show.html.twig"
+            vars:
+                route:
+                    parameters:
+                        id: $uuid
+                header: nfq.ui.cargo
+                subheader: nfq.ui.manage_cargo_platform

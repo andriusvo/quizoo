@@ -76,7 +76,7 @@ class ResponseFixture extends AbstractFixture
             foreach ($responseData['answers'] as $answerData) {
                 /** @var ResponseAnswer $answer */
                 $answer = $this->responseAnswerFactory->createNew();
-                $answer->setCorrect($answerData['correct']);
+                $answer->setScore((int)$answerData['score']);
                 $selectedAnswer = $this
                     ->entityManager
                     ->getRepository(Answer::class)
@@ -116,6 +116,6 @@ class ResponseFixture extends AbstractFixture
                                 ->arrayPrototype()
                                     ->children()
                                         ->scalarNode('selectedAnswer')->cannotBeEmpty()->end()
-                                        ->booleanNode('correct')->isRequired()->end();
+                                        ->scalarNode('score')->isRequired()->end();
     }
 }

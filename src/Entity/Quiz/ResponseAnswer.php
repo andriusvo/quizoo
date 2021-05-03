@@ -41,7 +41,7 @@ class ResponseAnswer implements ResourceInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Quiz\Answer")
-     * @ORM\JoinTable(name="reponse_quiz_answer",
+     * @ORM\JoinTable(name="app_response_quiz_answer",
      *      joinColumns={@ORM\JoinColumn(name="response_answer_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="answer_id", referencedColumnName="id", unique=true)}
      * )
@@ -57,11 +57,11 @@ class ResponseAnswer implements ResourceInterface
     private $response;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
-    private $correct = false;
+    private $score = 0;
 
     public function __construct()
     {
@@ -108,16 +108,16 @@ class ResponseAnswer implements ResourceInterface
         return $this;
     }
 
-    public function isCorrect(): bool
+    public function setScore(?int $score): ResponseAnswer
     {
-        return $this->correct;
-    }
-
-    public function setCorrect(bool $correct): ResponseAnswer
-    {
-        $this->correct = $correct;
+        $this->score = $score;
 
         return $this;
+    }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
     }
 
     public function getSelectedAnswer(): Answer

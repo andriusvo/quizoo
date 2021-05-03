@@ -102,4 +102,9 @@ class Answer implements ResourceInterface
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->value;
+    }
 }

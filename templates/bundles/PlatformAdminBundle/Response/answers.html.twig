@@ -8,7 +8,7 @@
                     <td class="five wide"><strong class="gray text">{{ 'app.ui.question_plural'|trans }}</strong></td>
                     <td class="five wide"><strong class="gray text">{{ 'app.ui.correct_answer'|trans }}</strong></td>
                     <td class="five wide"><strong class="gray text">{{ 'app.ui.your_answer'|trans }}</strong></td>
-                    <td class="five wide"><strong class="gray text">{{ 'app.ui.correct'|trans }}</strong></td>
+                    <td class="five wide"><strong class="gray text">{{ 'app.ui.score'|trans }}</strong></td>
                 </tr>
                 {% for answer in response.answers %}
                     {% set question = answer.selectedAnswer.question %}
@@ -29,9 +29,7 @@
                             </div>
                         </td>
                         <td>
-                            {% set color = answer.correct ? 'green' : 'red' %}
-                            {% set label = answer.correct ? 'app.ui.correct' : 'app.ui.incorrect' %}
-                            <div class="ui {{ color }} horizontal label">{{ label|trans }}</div>
+                            <div class="ui blue horizontal label">{{ answer.score }}</div>
                         </td>
                     </tr>
                 {% endfor %}

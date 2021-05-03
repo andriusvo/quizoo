@@ -1,0 +1,15 @@
+{% extends '@PlatformFront/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'app.ui.responses'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="ui basic segment">
+        <div class="ui center aligned grid">
+            <div class="sixteen wide mobile ten wide computer column">
+                {% include '@PlatformFront/Responses/quiz_details.html.twig' %}
+                <div class="ui hidden divider"></div>
+                {% include '@PlatformFront/Responses/questions.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

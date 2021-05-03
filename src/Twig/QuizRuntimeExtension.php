@@ -29,14 +29,24 @@ class QuizRuntimeExtension implements RuntimeExtensionInterface
     /** @var RepositoryInterface */
     private $quizRepository;
 
-    public function __construct(RepositoryInterface $quizRepository)
+    /** @var RepositoryInterface */
+    private $responseRepository;
+
+    public function __construct(RepositoryInterface $quizRepository, RepositoryInterface $responseRepository)
     {
         $this->quizRepository = $quizRepository;
+        $this->responseRepository = $responseRepository;
     }
 
     /** @return Quiz[] */
     public function findUpcomingQuizzes(User $user, int $limit): array
     {
         return $this->quizRepository->findUpcomingStudentQuiz($user, $limit);
+    }
+
+    /** @return Quiz[] */
+    public function findFinishedQuizzes(User $user, int $limit): array
+    {
+        return $this->responseRepository->findBy(['student' => $user], ['finishDate' => 'DESC'], $limit);
     }
 }

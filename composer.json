@@ -14,6 +14,7 @@
         "admin-platform/admin-bundle": "^0.5.2",
         "admin-platform/rbac-bundle": "^1.1",
         "doctrine/doctrine-migrations-bundle": "^2",
+        "ramsey/uuid": "^4.1",
         "sylius/fixtures-bundle": "^1.4",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
