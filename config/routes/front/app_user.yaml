@@ -1,0 +1,13 @@
+app_user_edit:
+    path: /users/{id}
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.admin_user:updateAction
+        _sylius:
+            template: "@PlatformFront/User/update.html.twig"
+            redirect: referer
+            flash: app.user.update_success
+            vars:
+                route:
+                    parameters:
+                        id: $id
