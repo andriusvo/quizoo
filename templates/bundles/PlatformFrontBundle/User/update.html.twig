@@ -1,0 +1,11 @@
+{% extends '@PlatformFront/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'sylius.ui.edit_admin_user'|trans }}{% endblock %}
+
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+{% block content %}
+    <div class="ui basic segment">
+        {% include '@PlatformFront/User/_content.html.twig' %}
+    </div>
+{% endblock %}

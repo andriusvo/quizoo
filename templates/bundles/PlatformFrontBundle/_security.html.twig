@@ -2,7 +2,7 @@
     {{ app.user.firstName|default(app.user.email) }}
     <i class="dropdown icon"></i>
     <div class="menu">
-        <a href="{{ path('sylius_admin_admin_user_update', {'id': app.user.id}) }}" class="item">
+        <a href="{{ path('app_user_edit', {'id': app.user.id}) }}" class="item">
             <i class="user icon"></i>
             {{ 'sylius.ui.my_account'|trans }}
         </a>

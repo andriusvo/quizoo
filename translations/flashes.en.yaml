@@ -2,3 +2,7 @@ sylius:
     resource:
         results_form_error: Group or student should be chosen!
         results_not_found: No results for chosen resource!
+
+app:
+    user:
+        update_success: User has been successfully updated.
