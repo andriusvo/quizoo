@@ -1,0 +1,26 @@
+{% extends '@PlatformFront/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'app.ui.responses'|trans }}{% endblock %}
+
+{% block content %}
+    <div id="header" class="ui stackable two column grid">
+        <div class="column">
+            <h1 class="ui header">
+                <i class="circular graduation cap icon"></i>
+                <div class="content">
+                    <span>{{ 'app.ui.your_response'|trans }}</span>
+                </div>
+            </h1>
+            {% include "@PlatformFront/Responses/Show/_breadcrumb.html.twig" %}
+        </div>
+    </div>
+    <div class="ui basic segment">
+        <div class="ui center aligned grid">
+            <div class="sixteen wide mobile ten wide computer column">
+                {% include '@PlatformFront/Responses/Show/quiz_details.html.twig' %}
+                <div class="ui hidden divider"></div>
+                {% include '@PlatformFront/Responses/Show/questions.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

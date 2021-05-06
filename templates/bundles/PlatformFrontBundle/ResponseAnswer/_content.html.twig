@@ -1,0 +1,29 @@
+<div id="v-container" class="ui grid middle aligned">
+    <div class="row">
+        <div class="column" align="middle">
+            <div class="ui raised card">
+                <div class="ui small centered image no-background"></div>
+                <div class="content bigger-font">
+                    <div class="ui header">{{ response_answer.question.title }}</div>
+                    <div class="description">
+                        {{ form_start(form, {'action': path('app_response_answer_update', {'uuid': response_answer.response.uuid, 'id': response_answer.id}), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+                        {{ form_errors(form) }}
+                        {{ form_row(form.selectedAnswers) }}
+                        {{ form_row(form._token) }}
+                        {{ form_end(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+                <div class="extra content">
+                    <button class="ui left negative floated labeled icon button">
+                        <i class="left chevron icon"></i>
+                        {{ 'sylius.ui.back'|trans }}
+                    </button>
+                    <button class="ui right floated labeled positive icon button">
+                        <i class="right chevron icon"></i>
+                        {{ 'sylius.ui.next'|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

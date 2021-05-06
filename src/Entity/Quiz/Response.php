@@ -75,11 +75,9 @@ class Response implements ResourceInterface
     private $student;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(type="datetime")
-     *
-     * @Assert\NotBlank()
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startDate;
 
@@ -101,7 +99,7 @@ class Response implements ResourceInterface
 
     public function __construct()
     {
-        $this->uuid = Uuid::uuid4()->toString();
+        $this->uuid = Uuid::uuid1()->toString();
         $this->answers = new ArrayCollection();
     }
 
@@ -146,12 +144,12 @@ class Response implements ResourceInterface
         return $this;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTime $startDate): Response
+    public function setStartDate(?\DateTime $startDate): Response
     {
         $this->startDate = $startDate;
 

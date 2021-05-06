@@ -67,23 +67,6 @@ class QuizRepository extends EntityRepository
             ->getResult();
     }
 
-    /** @return Quiz[] */
-    public function findUpcomingStudentQuiz(User $user, int $limit): array
-    {
-        $qb = $this->createQueryBuilder('quiz');
-
-        return $qb
-            ->leftJoin('quiz.groups', 'studentGroup')
-            ->where($qb->expr()->gt('quiz.validTo', ':now'))
-            ->andWhere($qb->expr()->eq('studentGroup', ':expectedGroup'))
-            ->setParameter('expectedGroup', $user->getGroup())
-            ->setParameter('now', new \DateTime('now'))
-            ->addOrderBy('quiz.validTo', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-
     private function createQueryBuilderWithUser(User $user): QueryBuilder
     {
         $qb = $this->createQueryBuilder('quiz');

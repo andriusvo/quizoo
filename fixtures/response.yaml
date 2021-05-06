@@ -15,6 +15,7 @@ sylius_fixtures:
                                     -
                                         selectedAnswer: '4'
                                         score: 20
+                                        question: 'How many is 2+2?'
                             -
                                 score: 95
                                 startDate: '2021-04-30 15:00'
@@ -25,6 +26,7 @@ sylius_fixtures:
                                     -
                                         selectedAnswer: 'false'
                                         score: 33
+                                        question: 'Is it plural?'
                             -
                                 score: 20
                                 startDate: '2021-04-30 18:00'
@@ -35,3 +37,4 @@ sylius_fixtures:
                                     -
                                         selectedAnswer: 'Yes'
                                         score: 33
+                                        question: 'What is polymorphism?'

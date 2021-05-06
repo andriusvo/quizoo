@@ -19,9 +19,8 @@ declare(strict_types=1);
 
 namespace App\Form\EventSubscriber\Quiz;
 
-use App\Constants\QuestionTypes;
-use App\Entity\Quiz\Question;
 use App\Entity\Quiz\Quiz;
+use App\Manager\ResponseManager;
 use App\Provider\UserProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -34,9 +33,13 @@ class QuizTypeSubscriber implements EventSubscriberInterface
     /** @var UserProvider */
     private $userProvider;
 
-    public function __construct(UserProvider $userProvider)
+    /** @var ResponseManager */
+    private $responseManager;
+
+    public function __construct(UserProvider $userProvider, ResponseManager $responseManager)
     {
         $this->userProvider = $userProvider;
+        $this->responseManager = $responseManager;
     }
 
     /** {@inheritdoc} */
@@ -60,21 +63,16 @@ class QuizTypeSubscriber implements EventSubscriberInterface
 
     public function postSubmit(FormEvent $event): void
     {
+        /** @var Quiz $quiz */
+        $quiz = $event->getData();
         $form = $event->getForm();
 
         if (false === $form->isSubmitted() || false === $form->isValid()) {
             return;
         }
 
-        /** @var Quiz $quiz */
-        $quiz = $event->getData();
-
-        /** @var Question $question */
-        foreach ($quiz->getQuestions() as $question) {
-            if ($question->getType() === QuestionTypes::FREE_TEXT_ANSWER) {
-                $quiz->setManualEvaluation(true);
-                break;
-            }
+        if (null === $quiz->getId()) {
+            $this->responseManager->createResponsesForGroups($quiz);
         }
     }
 }
