@@ -1,6 +1,6 @@
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
-{% set quizzes = app_upcoming_quizzes(app.user, 5) %}
+{% set responses = app_upcoming_quizzes(app.user, 5) %}
 
 <div class="ui placeholder segment">
     <div class="ui icon header">
@@ -8,17 +8,20 @@
         {{ 'app.ui.upcoming_quizzes'|trans }}
     </div>
 
-    {% if quizzes is empty %}
+    {% if responses is empty %}
         {{ messages.info('sylius.ui.no_results_to_display') }}
     {% endif %}
 
     <div class="ui relaxed divided list">
-        {% for quiz in quizzes %}
+        {% for response in responses %}
+            {% set quiz = response.quiz %}
             <div class="item">
                 <div class="right floated content">
-                    <div class="ui primary button">
-                        {{ 'app.ui.start'|trans }}
-                    </div>
+                    <a href="{{ path('app_response_start', {'uuid': response.uuid}) }}">
+                        <div class="ui primary button">
+                            {{ 'app.ui.start'|trans }}
+                        </div>
+                    </a>
                 </div>
                 <i class="large github middle aligned icon"></i>
                 <div class="content">

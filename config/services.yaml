@@ -88,6 +88,12 @@ services:
         tags:
             - { name: form.type }
 
+    App\Form\Type\Response\ResponseAnswerType:
+        arguments:
+            - '%app.model.response_answer.class%'
+        tags:
+            - { name: form.type }
+
     # Form types
     App\Form\Type\User\StudentType:
         arguments:
@@ -98,3 +104,14 @@ services:
     # Providers
     App\Provider\UserProvider:
         public: true
+
+    # Factories
+    App\Factory\ResponseFactory:
+        decorates: app.factory.response
+        arguments:
+            - '@App\Factory\ResponseFactory.inner'
+
+    App\Factory\ResponseAnswerFactory:
+        decorates: app.factory.response_answer
+        arguments:
+            - '@App\Factory\ResponseAnswerFactory.inner'

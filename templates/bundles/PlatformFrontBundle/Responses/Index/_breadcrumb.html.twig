@@ -1,0 +1,8 @@
+{% import '@PlatformAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.home'|trans, url: path('app_front_dashboard') },
+    { label: 'app.ui.responses'|trans },
+] %}
+
+{{ breadcrumb.crumble(breadcrumbs) }}

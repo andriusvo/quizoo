@@ -31,3 +31,4 @@ sylius_resource:
         app.response_answer:
             classes:
                 model: App\Entity\Quiz\ResponseAnswer
+                form: App\Form\Type\Response\ResponseAnswerType

@@ -1,0 +1,8 @@
+app_response_answer_update:
+    path: /responses/{uuid}/answer/{id}
+    methods: [GET, POST]
+    defaults:
+        _controller: app.controller.response_answer:updateAction
+        _sylius:
+            template: "@PlatformFront/ResponseAnswer/show.html.twig"
+            form: App\Form\Type\Response\ResponseAnswerType

@@ -105,7 +105,7 @@ sylius_fixtures:
                                         correct: false
                             -
                                 title: What is polymorphism?
-                                type: free_text_answer
+                                type: single_answer
                                 quiz: 'VU-20-12'
                                 answers:
                                     -

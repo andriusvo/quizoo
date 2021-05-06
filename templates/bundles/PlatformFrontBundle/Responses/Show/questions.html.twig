@@ -13,7 +13,7 @@
                     <td class="five wide"><strong class="gray text">{{ 'app.ui.score'|trans }}</strong></td>
                 </tr>
                 {% for responseAnswer in response.answers %}
-                    {% set question = responseAnswer.selectedAnswer.question %}
+                    {% set question = responseAnswer.question %}
                     <tr>
                         <td>{{ question.title }}</td>
                         <td>

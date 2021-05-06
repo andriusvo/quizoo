@@ -1,0 +1,41 @@
+sylius_grid:
+    grids:
+        app_front_student_response:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%app.model.response.class%"
+                    repository:
+                        method: createFinishedResponseGrid
+                        arguments:
+                            - expr:service('App\\Provider\\UserProvider').getUser().getId()
+            fields:
+                score:
+                    label: app.ui.score
+                    type: string
+                    sortable: ~
+                quiz:
+                    label: app.ui.quiz
+                    type: string
+                    sortable: ~
+                startDate:
+                    type: datetime
+                    label: app.ui.start_date
+                    sortable: ~
+                    options:
+                        format: Y-m-d H:i
+                finishDate:
+                    type: datetime
+                    label: app.ui.finish_date
+                    sortable: ~
+                    options:
+                        format: Y-m-d H:i
+            actions:
+                item:
+                    show:
+                        type: show
+                        options:
+                            link:
+                                route: app_response_show
+                                parameters:
+                                    uuid: resource.uuid

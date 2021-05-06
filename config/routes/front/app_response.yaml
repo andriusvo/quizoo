@@ -4,10 +4,26 @@ app_response_show:
     defaults:
         _controller: app.controller.response:showAction
         _sylius:
-            template: "@PlatformFront/Responses/show.html.twig"
+            template: "@PlatformFront/Responses/Show/show.html.twig"
+
+app_response_start:
+    path: /responses/{uuid}/start
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:showAction
+        _sylius:
+            template: "@PlatformFront/Responses/start.html.twig"
+
+app_response_index:
+    path: /responses
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:indexAction
+        _sylius:
+            grid: app_front_student_response
+            template: "@PlatformFront/Crud/index.html.twig"
             vars:
-                route:
-                    parameters:
-                        id: $uuid
-                header: nfq.ui.cargo
-                subheader: nfq.ui.manage_cargo_platform
+                subheader: app.ui.show_responses
+                icon: play
+                templates:
+                    breadcrumb: "@PlatformFront/Responses/Index/_breadcrumb.html.twig"

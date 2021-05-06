@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Entity\Quiz\Quiz;
+use App\Entity\Quiz\Response;
 use App\Entity\User\User;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -27,26 +27,22 @@ use Twig\Extension\RuntimeExtensionInterface;
 class QuizRuntimeExtension implements RuntimeExtensionInterface
 {
     /** @var RepositoryInterface */
-    private $quizRepository;
-
-    /** @var RepositoryInterface */
     private $responseRepository;
 
-    public function __construct(RepositoryInterface $quizRepository, RepositoryInterface $responseRepository)
+    public function __construct(RepositoryInterface $responseRepository)
     {
-        $this->quizRepository = $quizRepository;
         $this->responseRepository = $responseRepository;
     }
 
-    /** @return Quiz[] */
+    /** @return Response[] */
     public function findUpcomingQuizzes(User $user, int $limit): array
     {
-        return $this->quizRepository->findUpcomingStudentQuiz($user, $limit);
+        return $this->responseRepository->findUpcomingQuiz($user, $limit);
     }
 
-    /** @return Quiz[] */
+    /** @return Response[] */
     public function findFinishedQuizzes(User $user, int $limit): array
     {
-        return $this->responseRepository->findBy(['student' => $user], ['finishDate' => 'DESC'], $limit);
+        return $this->responseRepository->findFinishedQuiz($user, $limit);
     }
 }

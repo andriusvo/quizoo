@@ -48,6 +48,14 @@ app:
         latest_quizzes: Latest quizzes
         your_answer: Your answer
         responses: Responses
+        response: Response
+        questions_count: Questions count
+        quiz_time: Quiz time
+        minutes: Minutes
+        new_response_answer: New answer
+        your_response: Your response
+        go_to_questions: Go to questions
+        quiz_description: Single ant multiple type answers
         question:
             type:
                 single_answer: Single answer

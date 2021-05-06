@@ -263,6 +263,18 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this;
     }
 
+    public function quizTime(): int
+    {
+        $validFrom = $this->getValidFrom();
+        $validTo = $this->getValidTo();
+
+        if (null === $validFrom) {
+            return 0;
+        }
+
+        return $validFrom->diff($validTo)->i;
+    }
+
     public function __toString(): string
     {
         return $this->getSubject() . ': ' . $this->getTitle();

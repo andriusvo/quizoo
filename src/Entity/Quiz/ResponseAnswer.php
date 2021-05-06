@@ -49,6 +49,14 @@ class ResponseAnswer implements ResourceInterface
     private $selectedAnswers;
 
     /**
+     * @var Question
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Question")
+     * @ORM\JoinColumn(name="question_id", referencedColumnName="id", nullable=false)
+     */
+    private $question;
+
+    /**
      * @var Response
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Response", inversedBy="answers", cascade={"persist"})
@@ -108,6 +116,18 @@ class ResponseAnswer implements ResourceInterface
         return $this;
     }
 
+    public function getQuestion(): Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(Question $question): ResponseAnswer
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
     public function setScore(?int $score): ResponseAnswer
     {
         $this->score = $score;
@@ -118,10 +138,5 @@ class ResponseAnswer implements ResourceInterface
     public function getScore(): ?int
     {
         return $this->score;
-    }
-
-    public function getSelectedAnswer(): Answer
-    {
-        return $this->selectedAnswers->first();
     }
 }

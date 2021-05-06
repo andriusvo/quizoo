@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace App\Fixtures;
 
 use App\Entity\Quiz\Answer;
+use App\Entity\Quiz\Question;
 use App\Entity\Quiz\Quiz;
 use App\Entity\Quiz\Response;
 use App\Entity\Quiz\ResponseAnswer;
@@ -74,16 +75,22 @@ class ResponseFixture extends AbstractFixture
             $response->setQuiz($quiz);
 
             foreach ($responseData['answers'] as $answerData) {
-                /** @var ResponseAnswer $answer */
-                $answer = $this->responseAnswerFactory->createNew();
-                $answer->setScore((int)$answerData['score']);
+                /** @var ResponseAnswer $responseAnswer */
+                $responseAnswer = $this->responseAnswerFactory->createNew();
+                $responseAnswer->setScore((int)$answerData['score']);
                 $selectedAnswer = $this
                     ->entityManager
                     ->getRepository(Answer::class)
                     ->findOneBy(['value' => $answerData['selectedAnswer']]);
 
-                $answer->addSelectedAnswer($selectedAnswer);
-                $response->addAnswer($answer);
+                $question = $this
+                    ->entityManager
+                    ->getRepository(Question::class)
+                    ->findOneBy(['title' => $answerData['question']]);
+
+                $responseAnswer->addSelectedAnswer($selectedAnswer);
+                $responseAnswer->setQuestion($question);
+                $response->addAnswer($responseAnswer);
             }
 
             $this->entityManager->persist($response);
@@ -116,6 +123,7 @@ class ResponseFixture extends AbstractFixture
                                 ->arrayPrototype()
                                     ->children()
                                         ->scalarNode('selectedAnswer')->cannotBeEmpty()->end()
-                                        ->scalarNode('score')->isRequired()->end();
+                                        ->scalarNode('score')->isRequired()->end()
+                                        ->scalarNode('question')->isRequired()->end();
     }
 }
