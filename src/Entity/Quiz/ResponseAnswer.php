@@ -23,6 +23,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -40,11 +41,13 @@ class ResponseAnswer implements ResourceInterface
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Quiz\Answer")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Quiz\Answer", cascade={"persist"})
      * @ORM\JoinTable(name="app_response_quiz_answer",
      *      joinColumns={@ORM\JoinColumn(name="response_answer_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="answer_id", referencedColumnName="id", unique=true)}
      * )
+     *
+     * @Assert\Count(min="1", minMessage="You should select at least one answer")
      */
     private $selectedAnswers;
 

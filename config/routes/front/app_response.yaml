@@ -13,6 +13,22 @@ app_response_start:
         _controller: app.controller.response:showAction
         _sylius:
             template: "@PlatformFront/Responses/start.html.twig"
+            repository:
+                method: findOneByUuid
+                arguments:
+                    uuid: $uuid
+
+app_response_finish:
+    path: /responses/{uuid}/finish
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:showAction
+        _sylius:
+            template: "@PlatformFront/Responses/finish.html.twig"
+            repository:
+                method: findOneByUuid
+                arguments:
+                    uuid: $uuid
 
 app_response_index:
     path: /responses

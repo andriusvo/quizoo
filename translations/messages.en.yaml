@@ -32,8 +32,10 @@ app:
         valid_from: Valid from
         valid_to: Valid to
         questions: Questions
+        quiz_done_in: Quiz done in
         faq: FAQ
         correct: Correct
+        finish: Finish
         start: Start
         start_quiz: Start quiz
         enter_quiz_code: Enter quiz code

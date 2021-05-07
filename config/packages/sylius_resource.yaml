@@ -14,6 +14,7 @@ sylius_resource:
             classes:
                 model: App\Entity\Quiz\Answer
                 form: App\Form\EventSubscriber\Quiz\AnswerType
+                repository: App\Repository\Quiz\AnswerRepository
         app.student_group:
             classes:
                 model: App\Entity\Group\StudentGroup
@@ -32,3 +33,5 @@ sylius_resource:
             classes:
                 model: App\Entity\Quiz\ResponseAnswer
                 form: App\Form\Type\Response\ResponseAnswerType
+                repository: App\Repository\Quiz\ResponseAnswerRepository
+                controller: App\Controller\ResponseAnswer\ResponseAnswerController

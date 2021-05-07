@@ -26,6 +26,12 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ResponseRepository extends EntityRepository
 {
+    /** @param string|int $uuid */
+    public function findOneByUuid($uuid): ?Response
+    {
+        return $this->findOneBy(['uuid' => $uuid]);
+    }
+
     /** @param int|string $studentId */
     public function createStudentResponseGrid($studentId): QueryBuilder
     {

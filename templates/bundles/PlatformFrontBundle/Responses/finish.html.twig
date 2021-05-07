@@ -7,30 +7,25 @@
 
     <div class="ui very padded center aligned segment">
         <div class="content bigger-font">
-            <div class="ui header bigger-font">{{ 'app.ui.start'|trans }}</div>
+            <div class="ui header bigger-font">{{ 'app.ui.finish'|trans }}</div>
             <div class="description">
                 <div class="ui large middle aligned divided list">
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{ 'app.ui.quiz_time'|trans }}: {{ quiz.quizTime }} {{ 'app.ui.minutes'|trans }}</a>
+                            <a class="header">{{ 'app.ui.quiz_done_in'|trans }}: {{ response.finishTime }} {{ 'app.ui.minutes'|trans }}</a>
                         </div>
                     </div>
                     <div class="item">
                         <div class="content">
-                            <a class="header">{{ 'app.ui.questions_count'|trans }}: {{ quiz.questions.count }}</a>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="content">
-                            <a class="header">{{ 'app.ui.quiz_description'|trans }}</a>
+                            <a class="header">{{ 'app.ui.score'|trans }}: {{ response.score }} / {{ response.totalScore }}</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="extra content padding">
-            <a href="{{ path('app_response_answer_update', {'uuid': response.uuid, 'id': response.answers.first.id}) }}">
-                <button class="fluid ui positive button">{{ 'app.ui.go_to_questions'|trans }}</button>
+            <a href="{{ path('app_front_dashboard') }}">
+                <button class="fluid ui positive button">{{ 'sylius.ui.home'|trans }}</button>
             </a>
         </div>
     </div>
