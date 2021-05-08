@@ -172,4 +172,9 @@ class Question implements ResourceInterface
             }
         );
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }

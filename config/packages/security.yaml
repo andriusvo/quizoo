@@ -38,4 +38,5 @@ security:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: "^/admin/.*", roles: [ROLE_ADMIN, ROLE_TEACHER] }
-        - { path: "^/.*", roles: [IS_AUTHENTICATED_FULLY] }
+        - { path: "^/target-path", roles: [ROLE_ADMIN, ROLE_TEACHER, ROLE_STUDENT] }
+        - { path: "^/.*", roles: [ROLE_STUDENT] }

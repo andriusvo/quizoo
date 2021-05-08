@@ -5,6 +5,10 @@ app_response_show:
         _controller: app.controller.response:showAction
         _sylius:
             template: "@PlatformFront/Responses/Show/show.html.twig"
+            repository:
+                method: findOneByUuid
+                arguments:
+                    uuid: $uuid
 
 app_response_start:
     path: /responses/{uuid}/start
@@ -13,6 +17,39 @@ app_response_start:
         _controller: app.controller.response:showAction
         _sylius:
             template: "@PlatformFront/Responses/start.html.twig"
+            repository:
+                method: findOneByUuidAndNotFinished
+                arguments:
+                    uuid: $uuid
+
+app_response_finish:
+    path: /responses/{uuid}/finish
+    methods: [GET]
+    defaults:
+        _controller: app.controller.response:showAction
+        _sylius:
+            template: "@PlatformFront/Responses/finish.html.twig"
+            repository:
+                method: findOneByUuid
+                arguments:
+                    uuid: $uuid
+
+app_response_submit:
+    path: /responses/{uuid}/preview
+    methods: [GET, POST]
+    defaults:
+        _controller: app.controller.response:updateAction
+        _sylius:
+            template: "@PlatformFront/Responses/preview.html.twig"
+            form: App\Form\Type\Response\ResponseType
+            flash: false
+            redirect:
+                route: app_response_finish
+                parameters: { uuid: $uuid }
+            repository:
+                method: findOneByUuidAndNotFinished
+                arguments:
+                    uuid: $uuid
 
 app_response_index:
     path: /responses

@@ -26,6 +26,30 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ResponseRepository extends EntityRepository
 {
+    public function findOneByUuid(string $uuid): ?Response
+    {
+        $qb = $this->createQueryBuilder('response');
+
+        return $qb
+            ->where($qb->expr()->eq('response.uuid', ':uuid'))
+            ->andWhere($qb->expr()->isNotNull('response.finishDate'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByUuidAndNotFinished(string $uuid): ?Response
+    {
+        $qb = $this->createQueryBuilder('response');
+
+        return $qb
+            ->where($qb->expr()->eq('response.uuid', ':uuid'))
+            ->andWhere($qb->expr()->isNull('response.finishDate'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /** @param int|string $studentId */
     public function createStudentResponseGrid($studentId): QueryBuilder
     {

@@ -94,6 +94,12 @@ services:
         tags:
             - { name: form.type }
 
+    App\Form\Type\Response\ResponseType:
+        arguments:
+            - '%app.model.response.class%'
+        tags:
+            - { name: form.type }
+
     # Form types
     App\Form\Type\User\StudentType:
         arguments:

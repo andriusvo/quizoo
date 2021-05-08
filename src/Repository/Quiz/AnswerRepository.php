@@ -17,17 +17,19 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Type\Response;
+namespace App\Repository\Quiz;
 
-use App\Form\EventSubscriber\Response\ResponseAnswerTypeSubscriber;
-use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Entity\Quiz\Question;
+use Doctrine\ORM\QueryBuilder;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-class ResponseAnswerType extends AbstractResourceType
+class AnswerRepository extends EntityRepository
 {
-    /** {@inheritdoc} */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function createQueryBuilderByQuestion(Question $question): QueryBuilder
     {
-        $builder->addEventSubscriber(new ResponseAnswerTypeSubscriber());
+        return $this
+            ->createQueryBuilder('answer')
+            ->where('answer.question = :question')
+            ->setParameter('question', $question);
     }
 }

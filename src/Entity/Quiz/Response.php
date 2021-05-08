@@ -61,7 +61,7 @@ class Response implements ResourceInterface
     /**
      * @var Quiz
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Quiz")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz\Quiz", cascade={"persist"})
      * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id", nullable=false)
      */
     private $quiz;
@@ -108,12 +108,12 @@ class Response implements ResourceInterface
         return $this->id;
     }
 
-    public function getScore(): int
+    public function getScore(): ?int
     {
         return $this->score;
     }
 
-    public function setScore(int $score): Response
+    public function setScore(?int $score): Response
     {
         $this->score = $score;
 
@@ -166,6 +166,32 @@ class Response implements ResourceInterface
         $this->finishDate = $finishDate;
 
         return $this;
+    }
+
+    public function getFinishTime(): int
+    {
+        $startDate = $this->getStartDate();
+        $finishDate = $this->getFinishDate();
+
+        if (null === $startDate) {
+            return 0;
+        }
+
+        return $startDate->diff($finishDate)->i;
+    }
+
+    public function getTotalScore(): int
+    {
+        $score = 0;
+
+        /** @var ResponseAnswer $responseAnswer */
+        foreach ($this->getAnswers() as $responseAnswer) {
+            foreach ($responseAnswer->getQuestion()->getCorrectAnswers() as $correctAnswer) {
+                $score += 100;
+            }
+        }
+
+        return $score;
     }
 
     public function getAnswers(): Collection
