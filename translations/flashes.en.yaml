@@ -6,3 +6,5 @@ sylius:
 app:
     user:
         update_success: User has been successfully updated.
+    response:
+        already_submitted: Response already submitted

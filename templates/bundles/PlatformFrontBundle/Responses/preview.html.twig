@@ -1,0 +1,48 @@
+{% extends '@PlatformFront/layout.html.twig' %}
+
+{% block title %}{{ parent() }}{{ 'app.ui.responses'|trans }}{% endblock %}
+
+{% block content %}
+    {% set quiz = response.quiz %}
+
+    <div class="ui placeholder segment">
+        <div class="ui icon header">
+            <i class="question icon"></i>
+            {{ 'app.ui.review_response'|trans }}
+        </div>
+
+        <div class="ui relaxed divided list">
+            {% for responseAnswer in response.answers %}
+                {% set quiz = response.quiz %}
+                <div class="item">
+                    <div class="right floated content">
+                        <a href="{{ path('app_response_answer_update', {'uuid': response.uuid, 'id': responseAnswer.id}) }}">
+                            <div class="ui primary button">
+                                {{ 'app.ui.change_answer'|trans }}
+                            </div>
+                        </a>
+                    </div>
+                    <i class="large caret right middle aligned icon"></i>
+                    <div class="content">
+                        <a class="header">{{ 'app.ui.question_plural'|trans }}: {{ responseAnswer.question }}</a>
+                        <div class="description">
+                            <div class="ui bulleted list">
+                                {% for selectedAnswer in responseAnswer.selectedAnswers %}
+                                    <div class="item">{{ selectedAnswer }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {{ form_start(form, {'action': path('app_response_submit', {'uuid': response.uuid}), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+        {{ form_row(form._token) }}
+        <button class="ui fluid right positive labeled icon button" type="submit">
+            <i class="right arrow icon"></i>
+            {{ 'app.ui.submit'|trans }}
+        </button>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}

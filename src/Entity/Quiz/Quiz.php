@@ -148,7 +148,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this->validFrom;
     }
 
-    public function setValidFrom(\DateTime $validFrom): Quiz
+    public function setValidFrom(?\DateTime $validFrom): Quiz
     {
         $this->validFrom = $validFrom;
 
@@ -160,7 +160,7 @@ class Quiz implements ResourceInterface, TimestampableInterface
         return $this->validTo;
     }
 
-    public function setValidTo(\DateTime $validTo): Quiz
+    public function setValidTo(?\DateTime $validTo): Quiz
     {
         $this->validTo = $validTo;
 

@@ -26,10 +26,28 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ResponseRepository extends EntityRepository
 {
-    /** @param string|int $uuid */
-    public function findOneByUuid($uuid): ?Response
+    public function findOneByUuid(string $uuid): ?Response
     {
-        return $this->findOneBy(['uuid' => $uuid]);
+        $qb = $this->createQueryBuilder('response');
+
+        return $qb
+            ->where($qb->expr()->eq('response.uuid', ':uuid'))
+            ->andWhere($qb->expr()->isNotNull('response.finishDate'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneByUuidAndNotFinished(string $uuid): ?Response
+    {
+        $qb = $this->createQueryBuilder('response');
+
+        return $qb
+            ->where($qb->expr()->eq('response.uuid', ':uuid'))
+            ->andWhere($qb->expr()->isNull('response.finishDate'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /** @param int|string $studentId */

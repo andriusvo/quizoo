@@ -34,7 +34,15 @@ class ResponseAnswerRepository extends EntityRepository
         $qb = $this->createQueryBuilder('response_answer');
 
         return $qb
-            ->innerJoin('response_answer.response', 'response', Join::WITH, $qb->expr()->eq('response.uuid', ':uuid'))
+            ->innerJoin(
+                'response_answer.response',
+                'response',
+                Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('response.uuid', ':uuid'),
+                    $qb->expr()->isNull('response.finishDate')
+                )
+            )
             ->where($qb->expr()->eq('response_answer.id', ':id'))
             ->setParameters(
                 [

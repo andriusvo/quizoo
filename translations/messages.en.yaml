@@ -29,6 +29,8 @@ app:
         group: Group
         groups: Groups
         quiz_details: Quiz details
+        review_response: Review response
+        change_answer: Change answer
         valid_from: Valid from
         valid_to: Valid to
         questions: Questions
@@ -46,6 +48,7 @@ app:
         question_plural: Question
         response_details: Response details
         correct_answer: Correct answer
+        submit: Submit
         upcoming_quizzes: Upcoming quizzes
         latest_quizzes: Latest quizzes
         your_answer: Your answer

@@ -108,12 +108,12 @@ class Response implements ResourceInterface
         return $this->id;
     }
 
-    public function getScore(): int
+    public function getScore(): ?int
     {
         return $this->score;
     }
 
-    public function setScore(int $score): Response
+    public function setScore(?int $score): Response
     {
         $this->score = $score;
 

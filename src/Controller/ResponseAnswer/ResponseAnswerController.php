@@ -133,7 +133,7 @@ class ResponseAnswerController extends ResourceController
         )->first();
 
         if (false === $nextAnswer) {
-            return ['app_response_finish', ['uuid' => $response->getUuid()]];
+            return ['app_response_submit', ['uuid' => $response->getUuid()]];
         }
 
         return ['app_response_answer_update', ['id' => $nextAnswer->getId(), 'uuid' => $response->getUuid()]];
