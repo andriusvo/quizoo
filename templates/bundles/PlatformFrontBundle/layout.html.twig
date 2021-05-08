@@ -11,6 +11,13 @@
         <i class="home icon"></i>
     </a>
 
+    <div class="ui right floated simple item">
+        <a href="{{ path('app_front_faq') }}">
+            <i class="question icon"></i>
+            {{ 'sylius.ui.faqs'|trans }}
+        </a>
+    </div>
+
     {% include '@PlatformFront/_security.html.twig' %}
 {% endblock %}
 

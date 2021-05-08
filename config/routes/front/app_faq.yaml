@@ -1,0 +1,6 @@
+app_front_faq:
+    path: /faq
+    methods: [GET]
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: '@PlatformFront/Faq/_layout.html.twig'
