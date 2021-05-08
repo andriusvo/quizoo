@@ -35,6 +35,6 @@ class PlatformController extends AbstractController
             return $this->redirectToRoute('admin_platform_admin_dashboard_index');
         }
 
-        return $this->redirect('/');
+        return $this->redirectToRoute('app_front_dashboard');
     }
 }

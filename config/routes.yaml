@@ -18,6 +18,11 @@ platform_target_path:
     defaults:
         _controller: App\Controller\Platform\PlatformController::redirectAction
 
+platform_default:
+    path: /
+    defaults:
+        _controller: App\Controller\Platform\PlatformController::redirectAction
+
 admin_platform_admin_user:
     prefix: /admin
     resource: |

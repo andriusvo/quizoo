@@ -1,5 +1,5 @@
 app_front_dashboard:
-    path: /
+    path: /dashboard
     methods: [GET]
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
