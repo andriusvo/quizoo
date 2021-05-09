@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace App\Form\EventSubscriber\Response;
 
+use App\Calculator\ScoreCalculator;
 use App\Entity\Quiz\Answer;
 use App\Entity\Quiz\ResponseAnswer;
 use App\Repository\Quiz\AnswerRepository;
@@ -29,6 +30,14 @@ use Symfony\Component\Form\FormEvents;
 
 class ResponseAnswerTypeSubscriber implements EventSubscriberInterface
 {
+    /** @var ScoreCalculator */
+    private $scoreCalculator;
+
+    public function __construct(ScoreCalculator $scoreCalculator)
+    {
+        $this->scoreCalculator = $scoreCalculator;
+    }
+
     /** {@inheritdoc} */
     public static function getSubscribedEvents(): array
     {
@@ -77,12 +86,7 @@ class ResponseAnswerTypeSubscriber implements EventSubscriberInterface
 
     private function calculateResponseAnswerScore(ResponseAnswer $responseAnswer): void
     {
-        $correctAnswers = $responseAnswer->getQuestion()->getCorrectAnswers();
-        $singleAnswerScore = 100 / $correctAnswers->count();
-        $submittedAnswers = $responseAnswer->getSelectedAnswers();
-        $correctAnswersCount = \count(array_intersect($correctAnswers->toArray(), $submittedAnswers->toArray()));
-        $score = $singleAnswerScore * $correctAnswersCount;
-
+        $score = $this->scoreCalculator->calculate($responseAnswer);
         $responseAnswer->setScore($score);
     }
 

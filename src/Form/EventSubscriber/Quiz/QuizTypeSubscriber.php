@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace App\Form\EventSubscriber\Quiz;
 
 use App\Entity\Quiz\Quiz;
+use App\Mailer\NewQuizMailer;
 use App\Manager\ResponseManager;
 use App\Provider\UserProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -36,10 +37,17 @@ class QuizTypeSubscriber implements EventSubscriberInterface
     /** @var ResponseManager */
     private $responseManager;
 
-    public function __construct(UserProvider $userProvider, ResponseManager $responseManager)
-    {
+    /** @var NewQuizMailer */
+    private $newQuizMailer;
+
+    public function __construct(
+        UserProvider $userProvider,
+        ResponseManager $responseManager,
+        NewQuizMailer $newQuizMailer
+    ) {
         $this->userProvider = $userProvider;
         $this->responseManager = $responseManager;
+        $this->newQuizMailer = $newQuizMailer;
     }
 
     /** {@inheritdoc} */
@@ -73,6 +81,7 @@ class QuizTypeSubscriber implements EventSubscriberInterface
 
         if (null === $quiz->getId()) {
             $this->responseManager->createResponsesForGroups($quiz);
+            $this->newQuizMailer->sendQuizNotificationMail($quiz);
         }
     }
 }

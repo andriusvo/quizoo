@@ -1,0 +1,7 @@
+{% block body %}
+    <h3>Hi,</h3>
+    <p>You have new quiz assigned: {{ quiz.title }}</p>
+    <p>Subject: {{ quiz.subject }}</p>
+    <p>Quiz valid from: {{ quiz.validFrom|date('Y-m-d H:i:s') }}</p>
+    <p>Quiz will contain: {{ quiz.questions.count }} questions</p>
+{% endblock %}

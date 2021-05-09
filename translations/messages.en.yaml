@@ -65,6 +65,8 @@ app:
             type:
                 single_answer: Single answer
                 multiple_answer: Multiple answer
+    email:
+        new_quiz: New quiz was assigned
 
 sylius:
     ui:
