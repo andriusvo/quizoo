@@ -1,7 +1,7 @@
-Admin platform
+Quizoo platform
 ==============
 
-Project skeleton
+This project is based on Sylius Admin platform. Project was done as bachelor tesis
 
 Installation
 ------------
