@@ -19,128 +19,86 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat\Context;
 
+use App\Constants\AuthorizationRoles;
+use App\Entity\User\User;
 use Behat\MinkExtension\Context\RawMinkContext;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
-use Platform\Bundle\AdminBundle\Model\AdminUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Locale\Model\Locale;
+use Sylius\Component\Rbac\Model\Role;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * Class FixtureContext.
- */
-class FixtureContext extends RawMinkContext implements KernelAwareContext
+class FixtureContext extends RawMinkContext
 {
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     private $references = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setKernel(KernelInterface $kernel): void
+    /** @var KernelInterface */
+    private $kernel;
+
+    /** @var bool */
+    private static $initialized = false;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    public function __construct(KernelInterface $kernel, EntityManagerInterface $entityManager)
     {
         $this->kernel = $kernel;
+        $this->entityManager = $entityManager;
     }
 
-    /**
-     * @BeforeScenario
-     */
+    /** @BeforeScenario */
     public function initializeDatabase(): void
     {
-        static $initialized = false;
-        if ($initialized) {
+        if (self::$initialized) {
             return;
         }
 
-        $doctrine = $this->kernel->getContainer()->get('doctrine');
-        $this->dropAndCreateDatabase($doctrine->getConnection());
+        $this->dropAndCreateDatabase();
+        $this->executeMigrations();
+        $this->initializeRbacRoles();
 
-        /** @var EntityManager $manager */
-        $manager = $doctrine->getManager();
-        $metadata = $manager->getMetadataFactory()->getAllMetadata();
-        $schemaTool = new SchemaTool($manager);
-        $schemaTool->createSchema($metadata);
-
-        $initialized = true;
+        self::$initialized = true;
     }
 
-    /**
-     * @AfterScenario
-     */
+    /** @AfterScenario */
     public function afterScenario(): void
     {
-        (new ORMPurger($this->getManager()))->purge();
-        $this->references = [];
+        $excluded = ['sylius_role', 'sylius_role_permission', 'sylius_permission'];
+
+        (new ORMPurger($this->entityManager, $excluded))->purge();
     }
 
     /**
-     * @param Connection $originalConnection
+     * @Given /^There is an admin user "(?P<name>[^"]*)"$/
+     * @Given /^There is an admin user "(?P<name>[^"]*)" with role "(?P<role>[^"]*)"$/
+     * @Given /^There is an admin user "(?P<name>[^"]*)" with locale "(?P<locale>[^"]*)"$/
      */
-    private function dropAndCreateDatabase(Connection $originalConnection): void
-    {
-        $params = $originalConnection->getParams();
-
-        $dbName = $params['dbname'];
-        unset($params['url'], $params['dbname']);
-
-        $connection = DriverManager::getConnection($params);
-        $schema = $connection->getSchemaManager();
-
-        if (\in_array($dbName, $schema->listDatabases(), true)) {
-            $schema->dropDatabase($dbName);
+    public function thereIsAnAdminUser(
+        string $name,
+        string $role = AuthorizationRoles::ROLE_SUPERADMIN,
+        string $locale = null
+    ): User {
+        if (isset($this->references[User::class][$name])) {
+            return $this->references[User::class][$name];
         }
 
-        $schema->createDatabase($dbName);
-
-        $connection->close();
-    }
-
-    /**
-     * @return EntityManager
-     */
-    private function getManager(): EntityManager
-    {
-        return $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
-    }
-
-    /**
-     * @Given /^There is an admin user "([^"]*)"$/
-     * @Given /^There is an admin user "([^"]*)" with locale "([^"]*)"$/
-     * @param string $name
-     *
-     * @param string|null $locale
-     *
-     * @return AdminUser
-     */
-    public function thereIsAnAdminUser(string $name, string $locale = null): AdminUser
-    {
-        if (isset($this->references[AdminUser::class][$name])) {
-            return $this->references[AdminUser::class][$name];
-        }
-
-        $object = new AdminUser();
+        $object = new User();
         $object->setUsername($name);
-        $object->setEmail($name . '@example.com');
+        $object->setEmail($name);
         $object->setPlainPassword($name);
         $object->setLocaleCode($this->thereIsALocale($locale)->getCode());
         $object->setEnabled(true);
 
-        $manager = $this->getManager();
-        $manager->persist($object);
-        $manager->flush();
+        $authRole = $this->entityManager->getRepository(Role::class)->findOneBy(['code' => $role]);
+        $object->addAuthorizationRole($authRole);
 
-        $this->references[AdminUser::class][$name] = $object;
+        $this->entityManager->persist($object);
+        $this->entityManager->persist($authRole);
+        $this->entityManager->flush();
+
+        $this->references[User::class][$name] = $object;
 
         return $object;
     }
@@ -148,10 +106,6 @@ class FixtureContext extends RawMinkContext implements KernelAwareContext
     /**
      * @Given /^There is a locale$/
      * @Given /^There is a locale "([^"]*)"$/
-     *
-     * @param string|null $locale
-     *
-     * @return Locale
      */
     public function thereIsALocale(string $locale = null): Locale
     {
@@ -166,12 +120,40 @@ class FixtureContext extends RawMinkContext implements KernelAwareContext
         $object = new Locale();
         $object->setCode($locale);
 
-        $manager = $this->getManager();
-        $manager->persist($object);
-        $manager->flush();
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
 
         $this->references[Locale::class][$locale] = $object;
 
         return $object;
+    }
+
+    /**
+     * Drop and create DB
+     */
+    private function dropAndCreateDatabase(): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $schema = $connection->getSchemaManager();
+
+        $schema->dropAndCreateDatabase($connection->getDatabase());
+
+        $connection->close();
+    }
+
+    /**
+     * Exec migrations
+     */
+    private function executeMigrations(): void
+    {
+        exec(sprintf('php "%s/bin/console" doctrine:migrations:migrate -n -e test', $this->kernel->getProjectDir()));
+    }
+
+    /**
+     * Init rbac roles
+     */
+    private function initializeRbacRoles(): void
+    {
+        exec(sprintf('php "%s/bin/console" sylius:rbac:init -e test', $this->kernel->getProjectDir()));
     }
 }

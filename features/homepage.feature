@@ -10,8 +10,8 @@ Feature: Homepage
   Scenario: Open admin page logged in
     Given I am logged in as "administrator"
     When I go to "/"
-    Then I should be on "/"
-    And I should see "Admin platform"
+    Then I should be on "/admin/"
+    And I should see "Quizoo"
 
   Scenario: Open admin page not logged in
     When I go to "/"
