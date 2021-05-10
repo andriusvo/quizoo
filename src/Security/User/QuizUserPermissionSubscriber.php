@@ -1,20 +1,5 @@
 <?php
 
-/*
- * @copyright C MB Storiukas
- *
- * This Software is the property of Storiukas
- * and is protected by copyright law – it is NOT Freeware.
- *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact MB Storiukas
- * E-mail: info@storiukas.lt
- * https://www.storio.lt
- */
-
 declare(strict_types=1);
 
 namespace App\Security\User;
