@@ -5,4 +5,7 @@ services:
         autoconfigure: true
         public: true
 
+    App\Tests\Behat\:
+        resource: '../tests/Behat/*'
+
     App\Tests\TestBasicAuthenticator: ~

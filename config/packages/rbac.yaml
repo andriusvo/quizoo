@@ -38,6 +38,7 @@ sylius_rbac:
             description: Teacher role
             security_roles: [ROLE_TEACHER]
             permissions:
+                - sylius.admin_user.create
                 - sylius.admin_user.update
                 - app.quiz.index
                 - app.quiz.show

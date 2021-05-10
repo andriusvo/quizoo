@@ -19,128 +19,91 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat\Context;
 
+use App\Constants\AuthorizationRoles;
+use App\Entity\Quiz\Quiz;
+use App\Entity\Quiz\Response;
+use App\Entity\Subject\Subject;
+use App\Entity\User\User;
 use Behat\MinkExtension\Context\RawMinkContext;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
-use Platform\Bundle\AdminBundle\Model\AdminUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Locale\Model\Locale;
+use Sylius\Component\Rbac\Model\Role;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-/**
- * Class FixtureContext.
- */
-class FixtureContext extends RawMinkContext implements KernelAwareContext
+class FixtureContext extends RawMinkContext
 {
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
-
-    /**
-     * @var array
-     */
+    /** @var array */
     private $references = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setKernel(KernelInterface $kernel): void
+    /** @var KernelInterface */
+    private $kernel;
+
+    /** @var bool */
+    private static $initialized = false;
+
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    public function __construct(KernelInterface $kernel, EntityManagerInterface $entityManager)
     {
         $this->kernel = $kernel;
+        $this->entityManager = $entityManager;
     }
 
-    /**
-     * @BeforeScenario
-     */
+    /** @BeforeScenario */
     public function initializeDatabase(): void
     {
-        static $initialized = false;
-        if ($initialized) {
+        if (self::$initialized) {
             return;
         }
 
-        $doctrine = $this->kernel->getContainer()->get('doctrine');
-        $this->dropAndCreateDatabase($doctrine->getConnection());
+        $this->dropAndCreateDatabase();
+        $this->executeMigrations();
+        $this->initializeRbacRoles();
 
-        /** @var EntityManager $manager */
-        $manager = $doctrine->getManager();
-        $metadata = $manager->getMetadataFactory()->getAllMetadata();
-        $schemaTool = new SchemaTool($manager);
-        $schemaTool->createSchema($metadata);
-
-        $initialized = true;
+        self::$initialized = true;
     }
 
-    /**
-     * @AfterScenario
-     */
+    /** @AfterScenario */
     public function afterScenario(): void
     {
-        (new ORMPurger($this->getManager()))->purge();
-        $this->references = [];
+        $excluded = ['sylius_role', 'sylius_role_permission', 'sylius_permission'];
+
+        (new ORMPurger($this->entityManager, $excluded))->purge();
     }
 
     /**
-     * @param Connection $originalConnection
+     * @Given /^There is a user "(?P<name>[^"]*)"$/
+     * @Given /^There is a user "(?P<name>[^"]*)" with role "(?P<role>[^"]*)"$/
+     * @Given /^There is a user "(?P<name>[^"]*)" with locale "(?P<locale>[^"]*)"$/
      */
-    private function dropAndCreateDatabase(Connection $originalConnection): void
-    {
-        $params = $originalConnection->getParams();
-
-        $dbName = $params['dbname'];
-        unset($params['url'], $params['dbname']);
-
-        $connection = DriverManager::getConnection($params);
-        $schema = $connection->getSchemaManager();
-
-        if (\in_array($dbName, $schema->listDatabases(), true)) {
-            $schema->dropDatabase($dbName);
+    public function thereIsAnAdminUser(
+        string $name,
+        string $role = AuthorizationRoles::ROLE_SUPERADMIN,
+        string $locale = null
+    ): User {
+        if (isset($this->references[User::class][$name])) {
+            return $this->references[User::class][$name];
         }
 
-        $schema->createDatabase($dbName);
-
-        $connection->close();
-    }
-
-    /**
-     * @return EntityManager
-     */
-    private function getManager(): EntityManager
-    {
-        return $this->kernel->getContainer()->get('doctrine.orm.default_entity_manager');
-    }
-
-    /**
-     * @Given /^There is an admin user "([^"]*)"$/
-     * @Given /^There is an admin user "([^"]*)" with locale "([^"]*)"$/
-     * @param string $name
-     *
-     * @param string|null $locale
-     *
-     * @return AdminUser
-     */
-    public function thereIsAnAdminUser(string $name, string $locale = null): AdminUser
-    {
-        if (isset($this->references[AdminUser::class][$name])) {
-            return $this->references[AdminUser::class][$name];
-        }
-
-        $object = new AdminUser();
+        $object = new User();
         $object->setUsername($name);
-        $object->setEmail($name . '@example.com');
+        $object->setFirstName($name);
+        $object->setLastName($name);
+        $object->setEmail($name);
         $object->setPlainPassword($name);
         $object->setLocaleCode($this->thereIsALocale($locale)->getCode());
         $object->setEnabled(true);
 
-        $manager = $this->getManager();
-        $manager->persist($object);
-        $manager->flush();
+        $authRole = $this->entityManager->getRepository(Role::class)->findOneBy(['code' => $role]);
+        $object->addAuthorizationRole($authRole);
 
-        $this->references[AdminUser::class][$name] = $object;
+        $this->entityManager->persist($object);
+        $this->entityManager->persist($authRole);
+        $this->entityManager->flush();
+
+        $this->references[User::class][$name] = $object;
 
         return $object;
     }
@@ -148,10 +111,6 @@ class FixtureContext extends RawMinkContext implements KernelAwareContext
     /**
      * @Given /^There is a locale$/
      * @Given /^There is a locale "([^"]*)"$/
-     *
-     * @param string|null $locale
-     *
-     * @return Locale
      */
     public function thereIsALocale(string $locale = null): Locale
     {
@@ -166,12 +125,104 @@ class FixtureContext extends RawMinkContext implements KernelAwareContext
         $object = new Locale();
         $object->setCode($locale);
 
-        $manager = $this->getManager();
-        $manager->persist($object);
-        $manager->flush();
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
 
         $this->references[Locale::class][$locale] = $object;
 
         return $object;
+    }
+
+    /** @Given /^There is a response for student "([^"]*)" and quiz "([^"]*)"$/ */
+    public function thereIsAResponseForStudent(string $student, string $quiz): Response
+    {
+        if (isset($this->references[Response::class][$student])) {
+            return $this->references[Response::class][$student];
+        }
+
+        $object = new Response();
+        $object->setScore(100);
+        $object->setStudent($this->references[User::class][$student]);
+        $object->setStartDate(new \DateTime());
+        $object->setQuiz($this->references[Quiz::class][$quiz]);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Response::class][$student] = $object;
+
+        return $object;
+    }
+
+    /** @Given /^There is a subject "([^"]*)" with supervisor "([^"]*)"$/ */
+    public function thereIsASubjectWithSupervisor(string $subject, string $supervisor): Subject
+    {
+        if (isset($this->references[Subject::class][$subject])) {
+            return $this->references[Subject::class][$subject];
+        }
+
+        $object = new Subject();
+        $object->setCode($subject);
+        $object->setSupervisor($this->references[User::class][$supervisor]);
+        $object->setTitle($subject);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Subject::class][$subject] = $object;
+
+        return $object;
+    }
+
+    /** @Given /^There is a quiz with title "([^"]*)" for subject "([^"]*)"$/ */
+    public function thereIsAQuizWithTitle(string $title, string $subject): Quiz
+    {
+        if (isset($this->references[Quiz::class][$title])) {
+            return $this->references[Quiz::class][$title];
+        }
+
+        $object = new Quiz();
+        $object->setCode($title);
+        $object->setOwner($this->references[User::class]['administrator']);
+        $object->setTitle($title);
+        $object->setValidFrom(new \DateTime());
+        $object->setValidTo(new \DateTime());
+        $object->setSubject($this->references[Subject::class][$subject]);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Quiz::class][$title] = $object;
+
+        return $object;
+    }
+
+    /**
+     * Drop and create DB
+     */
+    private function dropAndCreateDatabase(): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $schema = $connection->getSchemaManager();
+
+        $schema->dropAndCreateDatabase($connection->getDatabase());
+
+        $connection->close();
+    }
+
+    /**
+     * Exec migrations
+     */
+    private function executeMigrations(): void
+    {
+        exec(sprintf('php "%s/bin/console" doctrine:migrations:migrate -n -e test', $this->kernel->getProjectDir()));
+    }
+
+    /**
+     * Init rbac roles
+     */
+    private function initializeRbacRoles(): void
+    {
+        exec(sprintf('php "%s/bin/console" sylius:rbac:init -e test', $this->kernel->getProjectDir()));
     }
 }

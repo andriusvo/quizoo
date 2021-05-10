@@ -19,42 +19,66 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat\Context;
 
+use Behat\Behat\Hook\Scope\AfterStepScope;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\Symfony2Extension\Context\KernelAwareContext;
-use Platform\Bundle\AdminBundle\Model\AdminUserInterface;
-use Sylius\Component\User\Repository\UserRepositoryInterface;
+use Behat\MinkExtension\Context\RawMinkContext;
+use Behat\Testwork\Tester\Result\TestResult;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Webmozart\Assert\Assert;
 
-/**
- * Class AdminContext.
- */
-class AdminContext extends MinkContext implements KernelAwareContext
+class AdminContext extends RawMinkContext
 {
-    /**
-     * @var KernelInterface
-     */
+    /** @var KernelInterface */
     private $kernel;
 
-    /**
-     * @var string|null
-     */
-    private $passwordHash;
+    /** @var MinkContext */
+    private $minkContext;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setKernel(KernelInterface $kernel): void
+    /** @var int[] */
+    private $windowSize = [1440, 900];
+
+    public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /** @BeforeScenario */
+    public function gatherContexts(BeforeScenarioScope $scope): void
+    {
+        $environment = $scope->getEnvironment();
+
+        $this->minkContext = $environment->getContext(MinkContext::class);
+    }
+
+    /** @AfterStep */
+    public function takeScreenshotAfterFailedStep(AfterStepScope $event): void
+    {
+        if ($event->getTestResult()->getResultCode() !== TestResult::FAILED) {
+            return;
+        }
+
+        $driver = $this->getSession()->getDriver();
+
+        if (false === $driver instanceof Selenium2Driver) {
+            return;
+        }
+
+        $driver->resizeWindow($this->windowSize[0], $this->windowSize[1]);
+
+        $stepText = $event->getStep()->getText();
+        $fileName = preg_replace('#[^a-zA-Z0-9._-]#', '', $stepText) . '.png';
+        $filePath = $this->kernel->getProjectDir() . '/var/uploads';
+
+        $this->saveScreenshot($fileName, $filePath);
+
+        echo 'Screenshot for ' . $stepText . ' placed in ' . $filePath . DIRECTORY_SEPARATOR . $fileName . PHP_EOL;
     }
 
     /**
      * @When /^I login in as "([^"]*)"$/
      * @Given /^I am logged in as "([^"]*)"$/
-     *
-     * @param string $name
      */
     public function iLoginAsUser(string $name): void
     {
@@ -66,93 +90,40 @@ class AdminContext extends MinkContext implements KernelAwareContext
         }
     }
 
-    /**
-     * @Then /^I should see "([^"]*)" in grid$/
-     * @param string $text
-     */
-    public function iShouldSeeInGrid(string $text)
+    /** @Then /^I click "([^"]*)" link$/ */
+    public function iClickLink(string $text): void
     {
-        $this->assertElementContainsText('.ui.sortable.stackable.celled.table', $text);
+        $this->getSession()->getPage()->find('xpath', \sprintf('//a[text()[contains(., "%s")]]', $text))->click();
     }
 
-    /**
-     * @Given /^I should not see "([^"]*)" in grid$/
-     * @param string $text
-     */
-    public function iShouldNotSeeInGrid(string $text)
+    /** @Then /^I should see "([^"]*)" in grid$/ */
+    public function iShouldSeeInGrid(string $text): void
     {
-        $this->assertElementNotContainsText('.ui.sortable.stackable.celled.table', $text);
+        $this->minkContext->assertElementContainsText('.ui.sortable.stackable.celled.table', $text);
     }
 
-    /**
-     * @Then /^I should see "([^"]*)" flash message$/
-     * @param string $text
-     */
-    public function iShouldSeeFlashMessage(string $text)
+    /** @Given /^I should not see "([^"]*)" in grid$/ */
+    public function iShouldNotSeeInGrid(string $text): void
     {
-        $this->assertElementContainsText('.sylius-flash-message', $text);
+        $this->minkContext->assertElementNotContainsText('.ui.sortable.stackable.celled.table', $text);
     }
 
-    /**
-     * @Given /^I am on users page$/
-     */
-    public function iAmOnUsersPage()
+    /** @Then /^I should see "([^"]*)" flash message$/ */
+    public function iShouldSeeFlashMessage(string $text): void
     {
-        $this->visit('/users');
+        $this->minkContext->assertElementContainsText('.sylius-flash-message', $text);
     }
 
-    /**
-     * @Then /^I edit "([^"]*)" from grid$/
-     * @param string $text
-     */
-    public function iEditFromGrid(string $text)
+    /** @Given /^I am on users page$/ */
+    public function iAmOnUsersPage(): void
     {
-        $this->getSession()->getPage()->find(
-            'xpath',
-            "//tr[@class=\"item\"]/td[text()[contains(., \"{$text}\")]]/../"
-            . 'td/descendant::a[text()[contains(., "Edit")]]'
-        )->click();
+        $this->minkContext->visit('/admin/users');
     }
 
-    /**
-     * @Given /^I change user name to "([^"]*)"$/
-     * @param string $name
-     */
-    public function iChangeUserNameTo(string $name)
+    /**  @Given /^I change user name to "([^"]*)"$/ */
+    public function iChangeUserNameTo(string $name): void
     {
-        $this->fillField('Username', $name);
-        $this->pressButton('Save changes');
-    }
-
-    /**
-     * @Given /^I have written down password hash of "([^"]*)"$/
-     *
-     * @param string $username
-     */
-    public function iHaveWrittenDownPasswordHashOf(string $username): void
-    {
-        /** @var UserRepositoryInterface $userRepository */
-        $userRepository = $this->kernel->getContainer()->get('sylius.repository.admin_user');
-        /** @var AdminUserInterface $user */
-        $user = $userRepository->findOneBy(['username' => $username]);
-        $this->passwordHash = $user->getPassword();
-    }
-
-    /**
-     * @Given /^Password hash of "([^"]*)" should differ from hash i have written down$/
-     *
-     * @param string $username
-     */
-    public function passwordHashOfShouldDifferFromHashIHaveWrittenDown(string $username): void
-    {
-        Assert::notNull($this->passwordHash, 'Password hash was not stored');
-        $this->kernel->getContainer()->get('sylius.manager.admin_user')->clear();
-
-        /** @var UserRepositoryInterface $userRepository */
-        $userRepository = $this->kernel->getContainer()->get('sylius.repository.admin_user');
-        /** @var AdminUserInterface $user */
-        $user = $userRepository->findOneBy(['username' => $username]);
-
-        Assert::notSame($user->getPassword(), $this->passwordHash);
+        $this->minkContext->fillField('Username', $name);
+        $this->minkContext->pressButton('Save changes');
     }
 }
