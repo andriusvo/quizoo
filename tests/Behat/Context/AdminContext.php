@@ -68,7 +68,7 @@ class AdminContext extends RawMinkContext
         $driver->resizeWindow($this->windowSize[0], $this->windowSize[1]);
 
         $stepText = $event->getStep()->getText();
-        $fileName = preg_replace('#[^a-zA-Z0-9\._-]#', '', $stepText) . '.png';
+        $fileName = preg_replace('#[^a-zA-Z0-9._-]#', '', $stepText) . '.png';
         $filePath = $this->kernel->getProjectDir() . '/var/uploads';
 
         $this->saveScreenshot($fileName, $filePath);
@@ -88,6 +88,12 @@ class AdminContext extends RawMinkContext
             $this->visitPath('/');
             $this->getSession()->setCookie('test_auth', $name);
         }
+    }
+
+    /** @Then /^I click "([^"]*)" link$/ */
+    public function iClickLink(string $text): void
+    {
+        $this->getSession()->getPage()->find('xpath', \sprintf('//a[text()[contains(., "%s")]]', $text))->click();
     }
 
     /** @Then /^I should see "([^"]*)" in grid$/ */
@@ -112,16 +118,6 @@ class AdminContext extends RawMinkContext
     public function iAmOnUsersPage(): void
     {
         $this->minkContext->visit('/admin/users');
-    }
-
-    /** @Then /^I edit "([^"]*)" from grid$/ */
-    public function iEditFromGrid(string $text): void
-    {
-        $this->getSession()->getPage()->find(
-            'xpath',
-            "//tr[@class=\"item\"]/td[text()[contains(., \"{$text}\")]]/../"
-            . 'td/descendant::a[text()[contains(., "Edit")]]'
-        )->click();
     }
 
     /**  @Given /^I change user name to "([^"]*)"$/ */

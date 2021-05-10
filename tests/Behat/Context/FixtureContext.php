@@ -20,6 +20,9 @@ declare(strict_types=1);
 namespace App\Tests\Behat\Context;
 
 use App\Constants\AuthorizationRoles;
+use App\Entity\Quiz\Quiz;
+use App\Entity\Quiz\Response;
+use App\Entity\Subject\Subject;
 use App\Entity\User\User;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -71,9 +74,9 @@ class FixtureContext extends RawMinkContext
     }
 
     /**
-     * @Given /^There is an admin user "(?P<name>[^"]*)"$/
-     * @Given /^There is an admin user "(?P<name>[^"]*)" with role "(?P<role>[^"]*)"$/
-     * @Given /^There is an admin user "(?P<name>[^"]*)" with locale "(?P<locale>[^"]*)"$/
+     * @Given /^There is a user "(?P<name>[^"]*)"$/
+     * @Given /^There is a user "(?P<name>[^"]*)" with role "(?P<role>[^"]*)"$/
+     * @Given /^There is a user "(?P<name>[^"]*)" with locale "(?P<locale>[^"]*)"$/
      */
     public function thereIsAnAdminUser(
         string $name,
@@ -86,6 +89,8 @@ class FixtureContext extends RawMinkContext
 
         $object = new User();
         $object->setUsername($name);
+        $object->setFirstName($name);
+        $object->setLastName($name);
         $object->setEmail($name);
         $object->setPlainPassword($name);
         $object->setLocaleCode($this->thereIsALocale($locale)->getCode());
@@ -124,6 +129,70 @@ class FixtureContext extends RawMinkContext
         $this->entityManager->flush();
 
         $this->references[Locale::class][$locale] = $object;
+
+        return $object;
+    }
+
+    /** @Given /^There is a response for student "([^"]*)" and quiz "([^"]*)"$/ */
+    public function thereIsAResponseForStudent(string $student, string $quiz): Response
+    {
+        if (isset($this->references[Response::class][$student])) {
+            return $this->references[Response::class][$student];
+        }
+
+        $object = new Response();
+        $object->setScore(100);
+        $object->setStudent($this->references[User::class][$student]);
+        $object->setStartDate(new \DateTime());
+        $object->setQuiz($this->references[Quiz::class][$quiz]);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Response::class][$student] = $object;
+
+        return $object;
+    }
+
+    /** @Given /^There is a subject "([^"]*)" with supervisor "([^"]*)"$/ */
+    public function thereIsASubjectWithSupervisor(string $subject, string $supervisor): Subject
+    {
+        if (isset($this->references[Subject::class][$subject])) {
+            return $this->references[Subject::class][$subject];
+        }
+
+        $object = new Subject();
+        $object->setCode($subject);
+        $object->setSupervisor($this->references[User::class][$supervisor]);
+        $object->setTitle($subject);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Subject::class][$subject] = $object;
+
+        return $object;
+    }
+
+    /** @Given /^There is a quiz with title "([^"]*)" for subject "([^"]*)"$/ */
+    public function thereIsAQuizWithTitle(string $title, string $subject): Quiz
+    {
+        if (isset($this->references[Quiz::class][$title])) {
+            return $this->references[Quiz::class][$title];
+        }
+
+        $object = new Quiz();
+        $object->setCode($title);
+        $object->setOwner($this->references[User::class]['administrator']);
+        $object->setTitle($title);
+        $object->setValidFrom(new \DateTime());
+        $object->setValidTo(new \DateTime());
+        $object->setSubject($this->references[Subject::class][$subject]);
+
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+        $this->references[Quiz::class][$title] = $object;
 
         return $object;
     }

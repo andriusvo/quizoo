@@ -5,3 +5,4 @@ default:
                 - Behat\MinkExtension\Context\MinkContext: ~
                 - App\Tests\Behat\Context\AdminContext: ~
                 - App\Tests\Behat\Context\FixtureContext: ~
+                - App\Tests\Behat\Context\GridContext: ~
