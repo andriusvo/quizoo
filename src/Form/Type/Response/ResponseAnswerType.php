@@ -10,9 +10,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ResponseAnswerType extends AbstractResourceType
 {
+    /** @var ResponseAnswerTypeSubscriber */
+    private $responseAnswerTypeSubscriber;
+
+    /** {@inheritdoc} */
+    public function __construct(
+        ResponseAnswerTypeSubscriber $responseAnswerTypeSubscriber,
+        string $dataClass,
+        array $validationGroups = []
+    ) {
+        parent::__construct($dataClass, $validationGroups);
+        $this->responseAnswerTypeSubscriber = $responseAnswerTypeSubscriber;
+    }
+
     /** {@inheritdoc} */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addEventSubscriber(new ResponseAnswerTypeSubscriber());
+        $builder->addEventSubscriber($this->responseAnswerTypeSubscriber);
     }
 }

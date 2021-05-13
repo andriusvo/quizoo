@@ -90,6 +90,7 @@ services:
 
     App\Form\Type\Response\ResponseAnswerType:
         arguments:
+            - '@App\Form\EventSubscriber\Response\ResponseAnswerTypeSubscriber'
             - '%app.model.response_answer.class%'
         tags:
             - { name: form.type }
