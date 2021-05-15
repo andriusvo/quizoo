@@ -18,7 +18,7 @@ docker-compose up
 Open http://web.quizoo.test/ in your browser
 ```
 
-And that's it! You can go around and use quiz system.
+That's it! You can go around and use quiz system.
 
 Credentials
 -------------------
