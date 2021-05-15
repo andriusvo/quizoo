@@ -6,18 +6,16 @@ This project is based on Sylius Admin platform. Project was done as bachelor the
 Installation
 ------------
 
-This project was made with docker images and docker-compose.You can find `docker-compose.yaml` in root directory.\
-Before booting up the project, verify that you have `docker-compose` installed: 
-
-`docker-compose -v`
-
-After you verify your `docker-compose` version, input the following:
+This project was made with docker images, Vagrant and VirtualBox. Follow the instructions to launch the system:
 
 ```bash
-git clone git@github.com:andriusvo/quizoo.git
-cd quizoo
-docker-compose up -d
-open http://web.quizoo.test/
+git clone git@github.com:andriusvo/quizoo-vms.git (Follow the instructions in VMS)
+cd quizoo-vms
+vagrant up
+vagrant ssh
+cd quizoo/projects/quizoo
+docker-compose up
+Open http://web.quizoo.test/ in your browser
 ```
 
 And that's it! You can go around and use quiz system.
