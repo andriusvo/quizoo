@@ -1,0 +1,129 @@
+version: '2.4'
+services:
+  web:
+    image: nfqlt/apache24-fastcgi
+    ports:
+      - '10.24.4.145:80:80'
+      - '10.24.4.145:8000:8000'
+    links:
+      - fastcgi
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/test-server.conf:/etc/apache2/sites-enabled/test-server.conf:ro'
+    environment:
+      APACHE_DOCUMENTROOT: /home/project/src/public
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_APACHE_MODULES: rewrite
+      NFQ_FCGI_IDLE_TIMEOUT: 300
+
+
+  fastcgi:
+    image: nfqlt/php74-fpm
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.4/fpm/99-custom.ini:ro'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv posix xdebug bcmath fileinfo gd'
+
+
+  mysql:
+    image: nfqlt/mysql80
+    ports:
+      - '10.24.4.145:3306:3306'
+    volumes_from:
+      - 'service:mysqlVol:rw'
+
+
+  mysqlVol:
+    image: nfqlt/mysql80-data
+    volumes:
+      - /var/lib/mysql
+
+
+  dev:
+    image: nfqlt/php74-dev
+    ports:
+      - '10.24.4.145:22:22'
+    links:
+      - mysql
+      - browser
+    volumes_from:
+      - 'service:node:rw'
+    volumes:
+      - './conf.d/php.ini:/etc/php/7.4/cli/99-custom.ini:ro'
+      - './src:/home/project/src'
+      - '/home/project/.ssh:/home/project/.ssh'
+      - '/etc/ssh:/etc/ssh'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+      - '/vagrant/bash_custom:/home/project/.bash_custom'
+    environment:
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv posix xdebug bcmath fileinfo gd'
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'git@github.com:andriusvo/quizoo.git'
+      NFQ_PROJECT_GIT_BRANCH: main
+      NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
+      NFQ_REMOTE_TOOL_NODE: >
+        /usr/bin/npm
+        /usr/bin/node
+        /usr/bin/gulp
+        /usr/bin/yarn
+
+
+  node:
+    image: nfqlt/node10
+    volumes:
+      - './src:/home/project/src'
+      - /tmp
+
+
+  browser:
+    image: nfqlt/chromedriver73
+    ports:
+      - '10.24.4.145:4444:4444'
+    links:
+      - web
+
+
+  mail:
+    image: nfqlt/mailhog
+    ports:
+      - '10.24.4.145:1080:80'
+      - '10.24.4.145:25:25'
+
+
+  linker:
+    image: nfqlt/linker18ce
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+  supervisor:
+    image: nfqlt/php74-supervisor
+    ports:
+      - '10.24.4.145:9001:9001'
+    volumes_from:
+      - 'service:node:rw'
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.4/cli/conf.d/90-custom.ini:ro'
+    links:
+      - mysql
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv posix xdebug bcmath fileinfo gd'
+      NFQ_SUPERVISOR_CONF_DIR: /home/project/src/tools/supervisor/conf.d
+      NFQ_SUPERVISOR_ENABLE_HTTP: 'true'
+      NFQ_USE_STARTUP_TRIGGER: 'true'
+
+
+volumes: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.4.145/28
