@@ -1,11 +1,11 @@
 magephp:
     log_dir: /var/log
     environments:
-        stage: &build
+        production:
             user: deploy
             from: ./
             host_path: /var/www
-            releases: 4
+            releases: 2
             exclude:
                 - ./var/cache/*
                 - ./var/log
@@ -25,17 +25,13 @@ magephp:
                 - ./public/.htaccess
                 - ./node_modules
             hosts:
-                - client-stage.moovauto.com
+                - ec2-35-158-197-11.eu-central-1.compute.amazonaws.com
             pre-deploy:
             on-deploy:
                 - exec: { cmd: 'setfacl -R -m:rwx -m u:www-data:rwX -m u:deploy:rwX var', desc: "Cache permissions (Current objects)" }
                 - exec: { cmd: 'setfacl -dR -m:rwx -m u:www-data:rwX -m u:deploy:rwX var', desc: "Cache permissions (New objects)" }
-                - fs/link: { from: '../../../shared/settings/public/htaccess-prod', to: 'public/.htaccess' }
-                - fs/link: { from: '../../../shared/settings/jwt', to: 'var/jwt' }
-                - fs/link: { from: '../../../shared/var/log', to: 'var/log' }
-                - fs/link: { from: '../../../shared/var/sessions', to: 'var/sessions' }
-                - fs/link: { from: '../../../shared/var/uploads', to: 'var/uploads' }
-                - fs/link: { from: '../../shared/settings/.env.local', to: '.env.local' }
+                - fs/link: { from: '../../../shared/public/.htaccess', to: 'public/.htaccess' }
+                - fs/link: { from: '../../shared/.env.local', to: '.env.local' }
                 - symfony/cache-warmup: { env: 'prod' }
                 - exec: { cmd: 'bin/console doctrine:cache:clear-result --env=prod', desc: "doctrine:cache:clear-result"}
                 - exec: { cmd: 'bin/console doctrine:cache:clear-query --env=prod', desc: "doctrine:cache:clear-query"}
@@ -45,10 +41,4 @@ magephp:
             on-release:
             post-release:
                 - exec: { cmd: 'fpm-reload', desc: "Clear opcache (gracefull fpm pool reload)" }
-                - exec: { cmd: 'supervisorctl reload', desc: "Reload supervisord processes (reread configs)"}
-                - exec: { cmd: 'crontab /var/www/current/tools/cron.d/crontab.conf_prod', desc: "Update crontab"}
             post-deploy:
-        production:
-            <<: *build
-            hosts:
-                - client.moovauto.com
