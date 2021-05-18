@@ -13,8 +13,8 @@ function setPerms {
 }
 
 echo -e '\n## Install mage ... '
-mkdir -p ${PROJECT_ROOT}/tools/mage
-cd  ${PROJECT_ROOT}/tools/mage
+mkdir -p /tmp/package/tools/mage
+cd /tmp/package/tools/mage
 composer init -n
 composer --no-interaction config github-oauth.github.com 3b6e5f518a2ffb7399c2b8be8629e91f8feb5821
 composer --no-interaction require 'andres-montanez/magallanes' '^4.0'
@@ -25,5 +25,4 @@ setPerms "${PROJECT_ROOT}/var/log"
 
 cd ${PROJECT_ROOT}
 
-APP_ENV=prod composer install --no-dev --optimize-autoloader --classmap-authoritative --no-interaction
-APP_ENV=prod tools/mage/vendor/bin/mage deploy "${DEPLOY_NAME}"
+SYMFONY_ENV=prod /tmp/package/tools/mage/vendor/bin/mage deploy "${DEPLOY_NAME}"

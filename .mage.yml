@@ -1,5 +1,5 @@
 magephp:
-    log_dir: /var/log
+    log_dir: var/log
     environments:
         production:
             user: deploy
@@ -30,7 +30,7 @@ magephp:
             on-deploy:
                 - exec: { cmd: 'setfacl -R -m:rwx -m u:www-data:rwX -m u:deploy:rwX var', desc: "Cache permissions (Current objects)" }
                 - exec: { cmd: 'setfacl -dR -m:rwx -m u:www-data:rwX -m u:deploy:rwX var', desc: "Cache permissions (New objects)" }
-                - fs/link: { from: '../../../shared/public/.htaccess', to: 'public/.htaccess' }
+                - fs/link: { from: '../../../shared/.htaccess', to: 'public/.htaccess' }
                 - fs/link: { from: '../../shared/.env.local', to: '.env.local' }
                 - symfony/cache-warmup: { env: 'prod' }
                 - exec: { cmd: 'bin/console doctrine:cache:clear-result --env=prod', desc: "doctrine:cache:clear-result"}
@@ -40,5 +40,4 @@ magephp:
                 - exec: { cmd: 'bin/console sylius:rbac:initialize --env=prod', desc: "sylius:rbac:initialize"}
             on-release:
             post-release:
-                - exec: { cmd: 'fpm-reload', desc: "Clear opcache (gracefull fpm pool reload)" }
             post-deploy:
